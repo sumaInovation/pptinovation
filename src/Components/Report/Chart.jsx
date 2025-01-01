@@ -98,8 +98,8 @@ const ResponsiveDashboard = ({Linedata,Piedata,Tabledata}) => {
           </div>
         ))}
       </div>
-
-      {/* Table Section */}
+{/* 
+      
       <div className="overflow-x-auto mt-8">
         <table className="min-w-full bg-gray-800 text-white border border-gray-300">
           <thead>
@@ -121,7 +121,7 @@ const ResponsiveDashboard = ({Linedata,Piedata,Tabledata}) => {
             ))}
           </tbody>
         </table>
-      </div>
+      </div> */}
     </div>
   );
 };
