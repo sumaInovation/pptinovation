@@ -12,9 +12,9 @@ const tableData = [
 ];
 
 const summaryData = [
-  { title: 'Total Sales', value: '$20,000', icon: '💵' },
-  { title: 'New Users', value: '500', icon: '👥' },
-  { title: 'Revenue', value: '$50,000', icon: '📊' },
+  { title: 'Max Efficency', value: '98%', icon: '✈️' },
+  { title: 'Min Efficency', value: '45%', icon: '🚲' },
+  { title: 'Average', value: '0.235', icon: '🧰' },
   { title: 'Active Sessions', value: '120', icon: '⌛' },
 ];
 
@@ -98,30 +98,33 @@ const ResponsiveDashboard = ({Linedata,Piedata,Tabledata}) => {
           </div>
         ))}
       </div>
-{/* 
+
       
-      <div className="overflow-x-auto mt-8">
-        <table className="min-w-full bg-gray-800 text-white border border-gray-300">
-          <thead>
+      <div className="overflow-x-auto mt-8 text-white text-sm">
+       <table className="min-w-full table-auto border-collapse border border-gray-300">
+            <thead>
             <tr>
-              <th className="py-2 px-4 border-b">Name</th>
-              <th className="py-2 px-4 border-b">Age</th>
-              <th className="py-2 px-4 border-b">Location</th>
-              <th className="py-2 px-4 border-b">Status</th>
+              <th className="py-2 px-2 border-b">Date</th>
+              <th className="py-2 px-2 border-b">Runtime</th>
+              <th className="py-2 px-2 border-b">Downtime</th>
+              <th className="py-2 px-2 border-b">Effi</th>
             </tr>
-          </thead>
+          </thead> 
+           
           <tbody>
-            {tableData.map((row, index) => (
+            {Tabledata.map((row, index) => (
               <tr key={index} >
-                <td className="py-2 px-4 border-b">{row.name}</td>
-                <td className="py-2 px-4 border-b">{row.age}</td>
-                <td className="py-2 px-4 border-b">{row.location}</td>
-                <td className="py-2 px-4 border-b">{row.status}</td>
+                <td className="py-2 px-2 border-b">{row[0]}</td>
+                <td className="py-2 px-2 border-b">{row[1]}</td>
+                <td className="py-2 px-2 border-b">{row[2]}</td>
+                <td className="py-2 px-2 border-b">{
+                    ((100*parseInt(row[1],10))/( parseInt(row[2],10)+ parseInt(row[1],10))).toFixed(2)
+                    }</td>
               </tr>
             ))}
           </tbody>
-        </table>
-      </div> */}
+         </table> 
+      </div> 
     </div>
   );
 };
