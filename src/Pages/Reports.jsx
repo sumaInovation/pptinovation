@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import Parameternav from './GetParameterForReport'
-import DownloadInvoice from './DownloadInvoice'
 import Spinner from 'react-bootstrap/Spinner';
-import { Button } from 'bootstrap';
+import Charts from '../Components/Report/Chart'
 const Reports = () => {
   const [sectiontogle, setSectiontogle] = useState(0);
   const [Result, setResult] = useState([]);
@@ -209,7 +208,7 @@ const Reports = () => {
         </div>
           : sectiontogle == 2 ? <div>
             {/* sectiontogle=2*/}
-            <DownloadInvoice Tabledata={value}Linedata={linedata} Piedata={piedata} />
+            <Charts Tabledata={value}Linedata={linedata} Piedata={piedata} />
           </div>
             : sectiontogle == 3 ?
               <div>
