@@ -49,19 +49,19 @@ const ResponsiveDashboard = ({Linedata,Piedata,Tabledata}) => {
         return acc;
       },Infinity)
     const Average=Tabledata.reduce((acc,item)=>{
-      const x=(parseInt(item[1],10)+parseInt(item[2],10))
-          acc[0]+=x;
-          acc[1]+=parseInt(item[0],10);
-          acc[2]=acc[1]/acc[2];
+      
+          acc[0]+=parseInt(item[1],10);
+          acc[1]+=parseInt(item[2],10);
+          acc[2]=((acc[0]*100)/(acc[0]+acc[1])).toFixed(2);
           return acc;
 
     },[0,0,0])
   
   const summaryData= [
-    { title: 'Max Efficency', value: (Maxefficency*100).toFixed(2)+"%", icon: '✈️' },
-    { title: 'Min Efficency', value: (Minefficency*100).toFixed(2)+"%", icon: '🚲' },
-    { title: 'Average', value: ((Maxefficency+Minefficency)*50).toFixed(2)+"%",icon: '🧰' },
-    { title: 'Total Length', value: '1500m', icon: '⌛' },
+    { title: 'Max Efficiency', value: (Maxefficency*100).toFixed(2)+"%", icon: '✈️' },
+    { title: 'Min Efficiency', value: (Minefficency*100).toFixed(2)+"%", icon: '🚲' },
+    { title: 'Average Efficiency', value: Average[2]+"%",icon: '🧰' },
+    { title: 'Total Length', value: Average[0]*0.25+"M", icon: '⌛' },
   ]
 
   return (

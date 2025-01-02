@@ -115,7 +115,7 @@ const Reports = () => {
   return (
     <>
       {/*Secondary Navbar */}
-      <div className='  flex  justify-around  mt-[80px] p-5'>
+      <div className='  flex  justify-around  mt-[80px] p-5   border-2 mx-4 rounded-lg'>
         <div>
           <Parameternav onDataChange={handleParameterFromChild} />
 
