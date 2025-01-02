@@ -77,14 +77,20 @@ const ResponsiveDashboard = ({Linedata,Piedata,Tabledata}) => {
                 nameKey="name"
                 outerRadius={100}
                 fill="#8884d8"
-                label
+                label={({ name, percent }) => 
+                   `${(percent * 100).toFixed(0)}%`}
+                
+                className="text-[12px] p-1 lg:text-sm"
               >
                 {pieData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
               <Tooltip />
-              <Legend />
+              <Legend
+               wrapperStyle={{
+                fontSize: '12px',  // Set font size of legend text here
+              }} />
             </PieChart>
           </ResponsiveContainer>
         </div>
