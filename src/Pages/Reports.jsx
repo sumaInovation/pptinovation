@@ -115,20 +115,18 @@ const Reports = () => {
   return (
     <>
       {/*Secondary Navbar */}
-      <div className='  flex  justify-around  mt-[80px] p-5   border-2 mx-4 rounded-lg'>
-        <div>
+      <div className=' relative flex  justify-around  mt-[80px] p-5  max-h-[115px]  border-2 mx-4 rounded-lg'>
+        <div className=' absolute top-10 left-5'>
           <Parameternav onDataChange={handleParameterFromChild} />
-
-
         </div>
-        <div >
+        <div className=' absolute top-10' >
           <button onClick={() => {
             handleHTTPRequest();
 
           }}
-            className="lg:text-sm text-[10px] rounded-lg bg-green-500 p-3 text-white">GET REPORT</button>
+            className="lg:text-sm text-[10px] rounded-lg bg-green-500 p-3 text-white">Get Report</button>
         </div>
-        <div >
+        <div className=' absolute top-10 right-5'>
           <button onClick={() => {
             UpdateLinechart();
             UpdatePiechart();
@@ -140,7 +138,7 @@ const Reports = () => {
 
           }}   
 
-            className="lg:text-sm text-[10px] rounded-lg bg-green-500 p-3 text-white">{sectiontogle == 1 ? "Graphycal" : "Row Data"}</button>
+            className="lg:text-sm text-[10px] rounded-lg bg-green-500 p-3 text-white">{sectiontogle == 1 ? "Graphical" : "Raw Data"}</button>
         </div>
       </div>
 
