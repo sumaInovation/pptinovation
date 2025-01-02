@@ -1,26 +1,18 @@
-import React from 'react';
+import { icons } from 'lucide-react';
+import React, { useState } from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as LineTooltip, Legend as LineLegend, ResponsiveContainer as LineResponsiveContainer } from 'recharts';
 
 
 
-const tableData = [
-  { name: 'Alice', age: 24, location: 'New York', status: 'Active' },
-  { name: 'Bob', age: 30, location: 'San Francisco', status: 'Inactive' },
-  { name: 'Charlie', age: 22, location: 'Los Angeles', status: 'Active' },
-  { name: 'David', age: 35, location: 'Chicago', status: 'Inactive' },
-];
 
-const summaryData = [
-  { title: 'Max Efficency', value: '98%', icon: '✈️' },
-  { title: 'Min Efficency', value: '45%', icon: '🚲' },
-  { title: 'Average', value: '0.235', icon: '🧰' },
-  { title: 'Active Sessions', value: '120', icon: '⌛' },
-];
+
+
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
 const ResponsiveDashboard = ({Linedata,Piedata,Tabledata}) => {
+ 
 
     const pieData = Object.keys(Piedata).map(key => ({
         name: key,
@@ -44,6 +36,33 @@ const ResponsiveDashboard = ({Linedata,Piedata,Tabledata}) => {
         '#D2691E', // Chocolate Brown
         '#20B2AA', // Light Sea Green
       ];
+     const Maxefficency=Tabledata.reduce((acc,item)=>{
+          const x=parseInt(item[1],10)/(parseInt(item[1],10)+parseInt(item[2],10))
+          if(acc<x)acc=x;
+           return acc;
+         },-Infinity)
+
+     
+     const Minefficency=Tabledata.reduce((acc,item)=>{
+       const x=parseInt(item[1],10)/(parseInt(item[1],10)+parseInt(item[2],10))
+       if(acc>x)acc=x;
+        return acc;
+      },Infinity)
+    const Average=Tabledata.reduce((acc,item)=>{
+      const x=(parseInt(item[1],10)+parseInt(item[2],10))
+          acc[0]+=x;
+          acc[1]+=parseInt(item[0],10);
+          acc[2]=acc[1]/acc[2];
+          return acc;
+
+    },[0,0,0])
+  
+  const summaryData= [
+    { title: 'Max Efficency', value: (Maxefficency*100).toFixed(2)+"%", icon: '✈️' },
+    { title: 'Min Efficency', value: (Minefficency*100).toFixed(2)+"%", icon: '🚲' },
+    { title: 'Average', value: ((Maxefficency+Minefficency)*50).toFixed(2)+"%",icon: '🧰' },
+    { title: 'Total Length', value: '1500m', icon: '⌛' },
+  ]
 
   return (
     <div className="container mx-auto p-4">
