@@ -3,6 +3,9 @@ import Parameternav from './GetParameterForReport'
 import Spinner from 'react-bootstrap/Spinner';
 import Charts from '../Components/Report/Chart'
 import Card from '../Components/Report/Reportcard'
+import imgLink from  '../Components/Report/Link.json'
+import { CiSearch } from "react-icons/ci";
+import { TbReportSearch } from "react-icons/tb";
 const Reports = () => {
   const [sectiontogle, setSectiontogle] = useState(0);
   const [Result, setResult] = useState([]);
@@ -117,16 +120,19 @@ const Reports = () => {
     <>
       {/*Secondary Navbar */}
       
-      <div className=' relative flex justify-between p-4  mt-[80px]   max-h-[115px]  '>
-        <div >
+      <div className=' relative flex lg:justify-end space-x-5 p-4   justify-center mt-[80px]   max-h-[115px]  '>
+        <div  className='flex space-x-2 bg-blue-500 rounded-lg lg:w-[200px] justify-center'>
           <Parameternav onDataChange={handleParameterFromChild} />
+         
         </div>
-        <div  >
+        <div 
+          className='flex space-x-2 bg-blue-500 rounded-lg lg:w-[200px] justify-center'>
           <button onClick={() => {
             handleHTTPRequest();
 
           }}
-            className="lg:text-sm text-[10px] rounded-lg bg-green-500 p-3 text-white">Get Report</button>
+            className="lg:text-sm text-[10px] rounded-lg p-3 text-white">Get Report</button>
+           
         </div>
         <div >
           <button onClick={() => {
@@ -150,20 +156,20 @@ const Reports = () => {
         {/* sectiontogle=0 */}
         <div className="lg:flex  justify-between p-6 block m-5">
       <Card 
-        image="https://via.placeholder.com/300x200" 
-        title="Card Title 1" 
-        description="This is a short description for card 1." 
+        image={imgLink[0].Link} 
+        title="Ongoing Pojects" 
+        description="If you want to see our ongoing project please go to this Link below" 
         link="#"
       />
       <Card 
-        image="https://via.placeholder.com/300x200" 
-        title="Card Title 2" 
-        description="This is a short description for card 2." 
+        image={imgLink[1].Link} 
+        title="About HQ4" 
+        description="More details please visit this link." 
         link="#"
       />
       <Card 
-        image="https://via.placeholder.com/300x200" 
-        title="Card Title 3" 
+        image={imgLink[2].Link} 
+        title="Upcomming Event" 
         description="This is a short description for card 3." 
         link="#"
       />
