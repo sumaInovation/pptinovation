@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Parameternav from './GetParameterForReport'
 import Spinner from 'react-bootstrap/Spinner';
 import Charts from '../Components/Report/Chart'
+import Card from '../Components/Report/Reportcard'
 const Reports = () => {
   const [sectiontogle, setSectiontogle] = useState(0);
   const [Result, setResult] = useState([]);
@@ -147,6 +148,26 @@ const Reports = () => {
 
       {sectiontogle == 0 ? <div>
         {/* sectiontogle=0 */}
+        <div className="lg:flex  justify-between p-6 block m-5">
+      <Card 
+        image="https://via.placeholder.com/300x200" 
+        title="Card Title 1" 
+        description="This is a short description for card 1." 
+        link="#"
+      />
+      <Card 
+        image="https://via.placeholder.com/300x200" 
+        title="Card Title 2" 
+        description="This is a short description for card 2." 
+        link="#"
+      />
+      <Card 
+        image="https://via.placeholder.com/300x200" 
+        title="Card Title 3" 
+        description="This is a short description for card 3." 
+        link="#"
+      />
+    </div>
 
       </div>
         : sectiontogle == 1 ? <div>
