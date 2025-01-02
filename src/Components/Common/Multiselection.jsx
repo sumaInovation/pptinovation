@@ -57,7 +57,7 @@ function App({onValueChange}) {
       {isOpen && (
         <div
           ref={dropdownRef} // Attach ref here
-          className="absolute -mt-[350px] ml-[80px] w-1/2 lg:w-48 bg-gray-700 border border-gray-300 rounded-md shadow-lg z-50"
+          className="absolute -mt-[300px] ml-[80px] w-1/2 lg:w-48 bg-gray-700 border border-gray-300 rounded-md shadow-lg z-50"
         >
           <ul className="max-h-80 overflow-y-auto text-sm text-black">
             {options.map((option) => (
