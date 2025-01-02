@@ -30,7 +30,7 @@ function GetParameterForReport({onDataChange}) {
   return (
     <div className="relative">
       {/* Hamburger Icon */}
-      <div className=" text-white ">
+      <div className=" text-white lg:text-sm text-[10px] ">
         <button onClick={toggleMenu} className="text-1xl rounded-lg bg-green-500 p-3">
          Filter
         </button>

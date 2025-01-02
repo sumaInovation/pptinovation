@@ -126,7 +126,7 @@ const Reports = () => {
             handleHTTPRequest();
 
           }}
-            className="text-1xl rounded-lg bg-green-500 p-3 text-white">GET REPORT</button>
+            className="lg:text-sm text-[10px] rounded-lg bg-green-500 p-3 text-white">GET REPORT</button>
         </div>
         <div >
           <button onClick={() => {
@@ -140,7 +140,7 @@ const Reports = () => {
 
           }}   
 
-            className="text-1xl rounded-lg bg-green-500 p-3 text-white">{sectiontogle == 1 ? "Graphycal" : "Row Data"}</button>
+            className="lg:text-sm text-[10px] rounded-lg bg-green-500 p-3 text-white">{sectiontogle == 1 ? "Graphycal" : "Row Data"}</button>
         </div>
       </div>
 
