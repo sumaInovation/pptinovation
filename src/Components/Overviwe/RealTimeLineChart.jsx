@@ -6,7 +6,7 @@ const RealTimeLineChart = () => {
 	// State to hold the data points for the chart
 	const [lineData, setLineData] = useState([]);
 	const { messages } = useWebSocket();
-	const { Length } = messages
+	
 	useEffect(() => {
 		try{
 
