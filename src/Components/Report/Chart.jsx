@@ -66,10 +66,10 @@ const ResponsiveDashboard = ({Linedata,Piedata,Tabledata}) => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 z-0">
         {/* Pie Chart Section */}
-        <div className="flex justify-center items-center p-4 border rounded-lg shadow-lg">
-          <ResponsiveContainer width="100%" height={300}>
+        <div className=" flex justify-center items-center p-4 border rounded-lg shadow-lg">
+          <ResponsiveContainer width="100%" height={300} >
             <PieChart>
               <Pie
                 data={pieData}

@@ -28,7 +28,7 @@ function GetParameterForReport({onDataChange}) {
     
    }
   return (
-    <div className="relative">
+    <div className="relative z-10">
       {/* Hamburger Icon */}
       <div className=" text-white lg:text-sm text-[10px] ">
         <button onClick={toggleMenu} className="text-1xl rounded-lg bg-green-500 p-3">
@@ -42,7 +42,7 @@ function GetParameterForReport({onDataChange}) {
           isMenuOpen ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
-        <ul className="space-y-6 text-white text-2xl text-center py-10 mt-[80px]">
+        <ul className="space-y-6 text-white lg:text-2xl text-sm text-center py-10 mt-[80px]">
           <li>Start Date</li>
           <li><input type='date' className="text-white bg-gray-700 rounded-md p-3"
                value={selectedStartDate}  // This binds the input value to the state
