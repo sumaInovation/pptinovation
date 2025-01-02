@@ -91,10 +91,11 @@ const Disributepiechar = () => {
 			transition={{ delay: 0.3 }}
 		>
 			<h2 className='text-lg font-medium mb-4 text-gray-100'>Today Runtime Vs Downtime</h2>
-			<div className='h-80'>
+			<div className='h-80 text-sm'>
 				<ResponsiveContainer width={"100%"} height={"100%"}>
 					<PieChart>
 						<Pie
+						    style={{fontSize:"15px"}}
 							data={filteredData}
 							cx={"50%"}
 							cy={"50%"}
@@ -103,11 +104,12 @@ const Disributepiechar = () => {
 							fill='#8884d8'
 							dataKey='value'
 
-							label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+							label={({ name, percent }) => `${(percent * 100).toFixed(0)}%`}
 						>
 							{userData.map((entry, index) => (
 								<Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
 							))}
+							
 						</Pie>
 						<Tooltip
 							contentStyle={{
