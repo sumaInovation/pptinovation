@@ -115,18 +115,19 @@ const Reports = () => {
   return (
     <>
       {/*Secondary Navbar */}
-      <div className=' relative flex  justify-around  mt-[80px] p-5  max-h-[115px]  border-2 mx-4 rounded-lg'>
-        <div className=' absolute top-10 left-5'>
+      
+      <div className=' relative flex justify-between p-4  mt-[80px]   max-h-[115px]  '>
+        <div >
           <Parameternav onDataChange={handleParameterFromChild} />
         </div>
-        <div className=' absolute top-10' >
+        <div  >
           <button onClick={() => {
             handleHTTPRequest();
 
           }}
             className="lg:text-sm text-[10px] rounded-lg bg-green-500 p-3 text-white">Get Report</button>
         </div>
-        <div className=' absolute top-10 right-5'>
+        <div >
           <button onClick={() => {
             UpdateLinechart();
             UpdatePiechart();
