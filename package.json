@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@auth0/auth0-react": "github:auth0/auth0-react",
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^2.2.0",
     "@react-oauth/google": "^0.12.1",
     "bootstrap": "^5.3.3",
     "chartjs-plugin-datalabels": "^2.2.0",

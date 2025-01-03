@@ -11,7 +11,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as LineTooltip, L
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
-const ResponsiveDashboard = ({Linedata,Piedata,Tabledata}) => {
+const Chart = ({Linedata,Piedata,Tabledata}) => {
  
 
     const pieData = Object.keys(Piedata).map(key => ({
@@ -154,4 +154,4 @@ const ResponsiveDashboard = ({Linedata,Piedata,Tabledata}) => {
   );
 };
 
-export default ResponsiveDashboard;
+export default Chart;

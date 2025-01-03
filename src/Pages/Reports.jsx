@@ -1,22 +1,35 @@
-import React, { useState } from 'react'
-import Parameternav from './GetParameterForReport'
-import Spinner from 'react-bootstrap/Spinner';
-import Charts from '../Components/Report/Chart'
+import React, { useState } from "react";
+import ParameterMenu from '../Components/Report/ParameterMenu'
+import Chart from "../Components/Report/Chart";
+import Rawdata from '../Components/Report/Rawdata'
 
 const Reports = () => {
-  const [sectiontogle, setSectiontogle] = useState(0);
+
+  
+  
   const [Result, setResult] = useState([]);
   const [linedata, setLinedata] = useState({});
   const [piedata, setPiedata] = useState({});
-  const [selectedItem, setSelectedItems] = useState([]);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndtDate] = useState(null);
+
   const options = ["IDLE", "RUNNING", "SPOOL FILED", "SPOOL EMPTHY", "TAPE DETECT", "COPPER BROKEN", "OTHERS"];
-  const handleParameterFromChild = async (startDate, endDate, selectedOptions) => {
-    setStartDate(new Date(startDate).toLocaleDateString());
-    setEndtDate(new Date(endDate).toLocaleDateString());
-    setSelectedItems(selectedOptions);
-  }
+  
+    // State to keep track of the active tab
+    const [activeTab, setActiveTab] = useState(1);
+    const [formData, setFormData] = useState({
+      startDate: "",
+      endDate: "",
+      selectedOptions: options,
+    });
+     // Handle data from the child component
+     const handleFormData = async(data) => {
+      
+       setFormData(data);
+       handleHTTPRequest(data)
+      
+      // Optionally, log the data
+     //console.log("Received data from child:", data);
+    };
+
   function generateDateRange(startDate, endDate) {
     const dateArray = [];
 
@@ -39,10 +52,10 @@ const Reports = () => {
   }
 
 
-  const handleHTTPRequest = async () => {
-
-    if (startDate != null && endDate != null && selectedItem.length > 0) {
-      setSectiontogle(3)
+  const handleHTTPRequest = async (date) => {
+   
+    if (1==1) {
+      
       try {
 
         fetch("https://googlesheet-yuetcisb.b4a.run/userdata")
@@ -54,10 +67,15 @@ const Reports = () => {
           })
           .then(data => {
             const filterData = data.filter(item =>
-              (parseDate(item[0]) >= parseDate(startDate) && parseDate(item[0]) <= parseDate(endDate))
+              (parseDate(item[0]) >= parseDate(date.startDate) && parseDate(item[0]) <= parseDate(date.endDate))
             )
             setResult(filterData);
-            setSectiontogle(1)
+            console.log(filterData)
+            UpdatePiechart(date,filterData);
+            UpdateLinechart(filterData);
+            setActiveTab(2);
+           
+            
           })
           .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
@@ -89,8 +107,8 @@ const Reports = () => {
     return acc
   }, []);
 
-  const UpdatePiechart = () => {
-    const myvalue = selectedItem.reduce((acc, item) => {
+  const UpdatePiechart = (data,Result) => {
+    const myvalue = data.selectedOptions.reduce((acc, item) => {
       if (acc[item] == null) acc[item] = 0;
       acc[item] = Result.reduce((prev, current) => {
         if (current[4] == item) prev += parseInt(current[3], 10);
@@ -101,7 +119,7 @@ const Reports = () => {
     }, {})
     setPiedata(myvalue);
   }
-  const UpdateLinechart = () => {
+  const UpdateLinechart = (Result) => {
     const grouped = Result.reduce((acc, item) => {
       const key = item[0];
       if (acc[key] == null) acc[key] = 0;
@@ -114,131 +132,62 @@ const Reports = () => {
   }
 
   return (
-    <>
-      {/*Secondary Navbar */}
-      
-      <div className=' relative flex lg:justify-end space-x-5 p-4   justify-center mt-[80px]   max-h-[115px]  '>
-        <div  className='flex space-x-2 bg-blue-500 rounded-lg lg:w-[200px] justify-center'>
-          <Parameternav onDataChange={handleParameterFromChild} />
+    <div className="w-full max-w-7xl mx-auto mt-[80px]">
+      {/* Tabs Header */}
+      <div className="flex border-b border-gray-300">
+        <button
+          onClick={() => setActiveTab(1)}
+          className={`flex-1 py-2 text-center text-lg ${
+            activeTab === 1 ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"
+          }`}
+        >
+          Search
+        </button>
+        <button
+          onClick={() => {setActiveTab(2)
          
-        </div>
-        <div 
-          className='flex space-x-2 bg-blue-500 rounded-lg lg:w-[200px] justify-center'>
-          <button onClick={() => {
-            handleHTTPRequest();
-
           }}
-            className="lg:text-sm text-[10px]  p-3 text-white">Get Report</button>
-           
-        </div>
-        <div className='flex space-x-2 bg-blue-500 rounded-lg lg:w-[200px] justify-center'>
-          <button onClick={() => {
-            UpdateLinechart();
-            UpdatePiechart();
-            if (sectiontogle == 1) { setSectiontogle(2) }
-            else if (sectiontogle == 2) {
-              setSectiontogle(1)
-
-            }
-
-          }}   
-
-            className="lg:text-sm text-[10px]  p-3 text-white">{sectiontogle == 1 ? "Graphical" : "Raw Data"}</button>
-        </div>
+          className={`flex-1 py-2 text-center text-lg ${
+            activeTab === 2 ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"
+          }`}
+        >
+          Graphycal
+        </button>
+        <button
+          onClick={() => setActiveTab(3)}
+          className={`flex-1 py-2 text-center text-lg ${
+            activeTab === 3 ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"
+          }`}
+        >
+          Raw Data
+        </button>
       </div>
 
-      {/* Main Section */}
-
-      {sectiontogle == 0 ? <div>
-        {/* sectiontogle=0  User Name And Pasword */}
-      
-    
-
-      </div>
-        : sectiontogle == 1 ? <div>
-          {/* sectiontogle=1 */}
+      {/* Tab Content */}
+      <div className="mt-4 p-4 ">
+        {activeTab === 1 && (
           <div>
-            {/* Display Row Data */}
-            <h1 className='text-white text-center text-3xl'>Row Data</h1>
-            <div className='text-white grid lg:grid-cols-3 grid-cols-1   m-3'>
-              {selectedItem.map(item => <div>
-
-                {/* Create The Table Title */}
-                <label className='text-2xl text-green-700 '>
-                  {Result.some(i => i[4] === item) && item}
-                </label>
-                {/* Create Table  */}
-
-                {Result.some(i => i[4] === item) &&
-                  (<table border="1">
-                    <thead>
-                      <tr>
-                        <th style={{ border: '1px solid black', padding: '8px' }}>Date</th>
-                        <th style={{ border: '1px solid black', padding: '8px' }}>Start</th>
-                        <th style={{ border: '1px solid black', padding: '8px' }}>End</th>
-                        <th style={{ border: '1px solid black', padding: '8px' }}>Duration</th>
-
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {Result.map((name, index) => (
-                        (item == name[4]) && <tr key={index}>
-                          <td style={{ border: '1px solid black', padding: '8px' }}>{name[0]}</td>
-                          <td style={{ border: '1px solid black', padding: '8px' }}>{name[1]}</td>
-                          <td style={{ border: '1px solid black', padding: '8px' }}>{name[2]}</td>
-                          <td style={{ border: '1px solid black', padding: '8px' }}>{name[3]}</td>
-
-
-                        </tr>
-
-
-                      ))}
-                      <tr>
-                        <td style={{ border: '1px solid black', padding: '8px' }} colSpan="3">Totlal</td>
-                        <td style={{ border: '1px solid black', padding: '8px' }} >{
-                          Result
-                            .filter(j => j[4] === item)
-                            .reduce((sum, j) => sum + parseInt(j[3], 10), 0)
-
-                        }</td>
-                      </tr>
-                    </tbody>
-                  </table>)}
-              </div>)}
-            </div>
-
-          </div>
-
-
-        </div>
-          : sectiontogle == 2 ? <div>
-            {/* sectiontogle=2*/}
-            <Charts Tabledata={value}Linedata={linedata} Piedata={piedata} />
-          </div>
-            : sectiontogle == 3 ?
-              <div>
-                {/* sectiontogle==2 */}
-                <div>
-                  <div className="flex items-center justify-center mt-[100px] text-white">
-                    <Spinner className='w-20 h-20' />
-                    <h1>Loading.....</h1>
-                  </div>
-                </div>
-
-
-              </div>
-              : <div>
-
-              </div>
            
+            <ParameterMenu  onConfirm={handleFormData} handlhhtp={()=>{}} />
+          </div>
+        )}
+        {activeTab === 2 && (
+          <div>
+            <h2 className="text-2xl font-semibold text-gray-300">Analysis Report</h2>
+            <Chart Linedata={linedata} Piedata={piedata} Tabledata={value}/>
+          </div>
+        )}
+        {activeTab === 3 && (
+          <div>
+            <h2 className="text-2xl font-semibold text-gray-300">Raw Data</h2>
+           <Rawdata selectedItem={[]}/>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
-      }
-   <div className='h-[50px]'></div>
-    </>
+export default  Reports
 
-
-
-  )
-}
-
-export default Reports
+  
