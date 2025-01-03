@@ -98,7 +98,7 @@ const LayoutWithSidebar = () => {
           <Routes>
          <Route path="/" element={<Overviwepage/>}/>
          <Route path="/analytics" element={<Analytics/>}/>
-         <Route path="/productpage" element={<Productpage/>}/>
+         <Route path="/products" element={<Productpage/>}/>
          <Route path="reports" element={<Reports/>}/>
          
          

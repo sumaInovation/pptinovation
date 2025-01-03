@@ -28,7 +28,7 @@ function GetParameterForReport({onDataChange}) {
     
    }
   return (
-    <div className="relative z-10">
+    <div className="relative z-10"onDoubleClick={()=>{toggleMenu(false)}}>
       {/* Hamburger Icon */}
       <div className=" text-white lg:text-sm text-[10px] ">
         <button onClick={toggleMenu} className="text-1xl rounded-lg  p-3">

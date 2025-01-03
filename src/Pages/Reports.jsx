@@ -2,10 +2,7 @@ import React, { useState } from 'react'
 import Parameternav from './GetParameterForReport'
 import Spinner from 'react-bootstrap/Spinner';
 import Charts from '../Components/Report/Chart'
-import Card from '../Components/Report/Reportcard'
-import imgLink from  '../Components/Report/Link.json'
-import { CiSearch } from "react-icons/ci";
-import { TbReportSearch } from "react-icons/tb";
+
 const Reports = () => {
   const [sectiontogle, setSectiontogle] = useState(0);
   const [Result, setResult] = useState([]);
@@ -131,10 +128,10 @@ const Reports = () => {
             handleHTTPRequest();
 
           }}
-            className="lg:text-sm text-[10px] rounded-lg p-3 text-white">Get Report</button>
+            className="lg:text-sm text-[10px]  p-3 text-white">Get Report</button>
            
         </div>
-        <div >
+        <div className='flex space-x-2 bg-blue-500 rounded-lg lg:w-[200px] justify-center'>
           <button onClick={() => {
             UpdateLinechart();
             UpdatePiechart();
@@ -146,34 +143,16 @@ const Reports = () => {
 
           }}   
 
-            className="lg:text-sm text-[10px] rounded-lg bg-green-500 p-3 text-white">{sectiontogle == 1 ? "Graphical" : "Raw Data"}</button>
+            className="lg:text-sm text-[10px]  p-3 text-white">{sectiontogle == 1 ? "Graphical" : "Raw Data"}</button>
         </div>
       </div>
 
       {/* Main Section */}
 
       {sectiontogle == 0 ? <div>
-        {/* sectiontogle=0 */}
-        <div className="lg:flex  justify-between p-6 block m-5">
-      <Card 
-        image={imgLink[0].Link} 
-        title="Ongoing Pojects" 
-        description="If you want to see our ongoing project please go to this Link below" 
-        link="#"
-      />
-      <Card 
-        image={imgLink[1].Link} 
-        title="About HQ4" 
-        description="More details please visit this link." 
-        link="#"
-      />
-      <Card 
-        image={imgLink[2].Link} 
-        title="Upcomming Event" 
-        description="This is a short description for card 3." 
-        link="#"
-      />
-    </div>
+        {/* sectiontogle=0  User Name And Pasword */}
+      
+    
 
       </div>
         : sectiontogle == 1 ? <div>
