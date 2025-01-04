@@ -31,7 +31,7 @@ export default function Navbar() {
             </DisclosureButton>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex shrink-0 items-center text-white text-3xl">
+            <div className="flex shrink-0 items-center text-white lg:text-3xl text-1xl ">
               {/* <img
                 alt="PPT Inovation"
                 src=""
