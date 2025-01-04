@@ -10,6 +10,10 @@ const Reports = () => {
   const [Result, setResult] = useState([]);
   const [linedata, setLinedata] = useState({});
   const [piedata, setPiedata] = useState({});
+  const[Tabledata,setTableData]=useState([]);
+  const[Tableoption,setTableoptions]=useState([]);
+  
+  
 
   const options = ["IDLE", "RUNNING", "SPOOL FILED", "SPOOL EMPTHY", "TAPE DETECT", "COPPER BROKEN", "OTHERS"];
   
@@ -70,10 +74,13 @@ const Reports = () => {
               (parseDate(item[0]) >= parseDate(date.startDate) && parseDate(item[0]) <= parseDate(date.endDate))
             )
             setResult(filterData);
-            console.log(filterData)
             UpdatePiechart(date,filterData);
             UpdateLinechart(filterData);
+            UpdatesTable(filterData,date.selectedOptions);
+            
+      
             setActiveTab(2);
+            
            
             
           })
@@ -131,6 +138,12 @@ const Reports = () => {
     setLinedata(grouped);
   }
 
+  const UpdatesTable=(Result,selecitem)=>{
+    setTableData(Result);
+    setTableoptions(selecitem);
+
+  }
+
   return (
     <div className="w-full max-w-7xl mx-auto mt-[80px]">
       {/* Tabs Header */}
@@ -180,7 +193,7 @@ const Reports = () => {
         {activeTab === 3 && (
           <div>
             <h2 className="text-2xl font-semibold text-gray-300">Raw Data</h2>
-           <Rawdata selectedItem={[]}/>
+           <Rawdata TableData={Tabledata} Tableoption={Tableoption}/>
           </div>
         )}
       </div>

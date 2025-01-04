@@ -27,13 +27,19 @@ const Card = ({ onConfirm,handlhhtp }) => {
       endDate:new Date(endDate).toLocaleDateString(),
       selectedOptions,
     };
-    onConfirm(data); // Passing the data to the parent via the callback function
-    handlhhtp();//Triger HTTP handle function on Parent
+    if(startDate!=undefined && endDate!=undefined && selectedOptions.length>0){
+      onConfirm(data); // Passing the data to the parent via the callback function
+      handlhhtp();//Triger HTTP handle function on Parent
+    }else{
+      
+      alert("Please select parameters corectly!")
+    }
+   
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-semibold mb-4 text-center">Card Component</h2>
+    <div className="max-w-md mx-auto bg-gray-200 p-6 rounded-lg shadow-lg">
+      <h2 className="text-2xl font-semibold mb-4 text-center">Filtering Data</h2>
 
       {/* Start Date Input */}
       <div className="mb-4">
@@ -113,6 +119,16 @@ const Card = ({ onConfirm,handlhhtp }) => {
               className="mr-2"
             />
            SPOOL FILED
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              value="IDLE"
+              onChange={handleCheckboxChange}
+              checked={selectedOptions.includes("IDLE")}
+              className="mr-2"
+            />
+            IDLE
           </div>
           <div>
             <input

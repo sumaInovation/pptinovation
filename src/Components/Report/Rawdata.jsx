@@ -1,22 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-const Rawdata = ({Result,selectedItem}) => {
+const Rawdata = ({TableData,Tableoption}) => {
+  useEffect(()=>{
+    console.log(TableData);
+  },[])
   return (
     <>
 
 <div>
             {/* Display Row Data */}
-         
+      {(Tableoption.length==0)?<div className='mt-[80px] text-white'>No data Previwes</div>:
             <div className='text-white grid lg:grid-cols-3 grid-cols-1   m-3'>
-              {selectedItem.map(item => <div>
+              {Tableoption.map(item => <div>
 
                 {/* Create The Table Title */}
                 <label className='text-2xl text-green-700 '>
-                  {Result.some(i => i[4] === item) && item}
+                  {TableData.some(i => i[4] === item) && item}
                 </label>
                 {/* Create Table  */}
 
-                {Result.some(i => i[4] === item) &&
+                {TableData.some(i => i[4] === item) &&
                   (<table border="1">
                     <thead>
                       <tr>
@@ -28,7 +31,7 @@ const Rawdata = ({Result,selectedItem}) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {Result.map((name, index) => (
+                      {TableData.map((name, index) => (
                         (item == name[4]) && <tr key={index}>
                           <td style={{ border: '1px solid black', padding: '8px' }}>{name[0]}</td>
                           <td style={{ border: '1px solid black', padding: '8px' }}>{name[1]}</td>
@@ -43,7 +46,7 @@ const Rawdata = ({Result,selectedItem}) => {
                       <tr>
                         <td style={{ border: '1px solid black', padding: '8px' }} colSpan="3">Totlal</td>
                         <td style={{ border: '1px solid black', padding: '8px' }} >{
-                          Result
+                          TableData
                             .filter(j => j[4] === item)
                             .reduce((sum, j) => sum + parseInt(j[3], 10), 0)
 
@@ -53,8 +56,9 @@ const Rawdata = ({Result,selectedItem}) => {
                   </table>)}
               </div>)}
             </div>
-
+}
           </div>
+                      
     </>
   )
 }
