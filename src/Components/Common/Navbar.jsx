@@ -28,12 +28,13 @@ export default function Navbar() {
             </DisclosureButton>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex shrink-0 items-center">
-              <img
+            <div className="flex shrink-0 items-center text-white text-3xl">
+              {/* <img
                 alt="PPT Inovation"
                 src=""
                 className="h-8 w-auto text-white text-3xl"
-              />
+              /> */}
+              PPT Inovation
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
