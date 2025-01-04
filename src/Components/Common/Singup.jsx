@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import { GoogleLogin } from '@react-oauth/google';
 import { useGoogleContext } from './GoogleAuthContext';
 
 const SignupPage = () => {
-  const navigate = useNavigate();
+   
   const { handleLoginSuccess, handleLoginFailure, userData, handleLogout } = useGoogleContext();
   const [formData, setFormData] = useState({
     username: '',
@@ -82,7 +82,7 @@ const SignupPage = () => {
           <button
             type="submit"
             className="w-full py-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          onClick={()=>navigate('/')}>
+          >
             Sign Up
           </button>
         </form>}
