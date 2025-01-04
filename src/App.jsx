@@ -7,6 +7,7 @@ import Overviwepage from './Pages/Overviwepage'
 import Analytics from './Pages/Analytics'
 // import Productpage from './Pages/Productpage'
 import Reports from './Pages/Reports'
+import SignUpForm from './Components/Common/Singup'
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
      
@@ -18,6 +19,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
          <Route path='/' element={<Overviwepage/>}/>
          <Route path='/report' element={<Reports/>}/>
          <Route path='/analytics' element={<Analytics/>}/>
+         <Route path='/singup' element={<SignUpForm />}/>
         </Routes>
         </BrowserRouter>
         

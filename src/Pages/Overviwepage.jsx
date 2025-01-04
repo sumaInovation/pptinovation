@@ -5,9 +5,12 @@ import StatCard from '../Components/Common/StatCard'
 import RealTimeLineChart from '../Components/Overviwe/RealTimeLineChart'
 import Disributepiechar from '../Components/Overviwe/Disributepiechar'
 import { useWebSocket } from '../Components/Common/WebSocketContext';
-
+import { useGoogleContext } from '../Components/Common/GoogleAuthContext';
 
 const Overviwepage = () => {
+const{userData}=useGoogleContext();
+
+	
 	const [IsMachineRun, setIsMachineRun] = useState(false);
 	const [todatproduction, setTodayproduction] = useState(0);
 	const { messages } = useWebSocket();
@@ -75,7 +78,9 @@ const Overviwepage = () => {
 
 	}, [messages])
 
-
+	if (!userData) {
+		return <div className="mt-[100px] text-8xl">Please log in to see  Report.</div>;
+	  }
 
 	return (
 
