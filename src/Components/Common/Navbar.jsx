@@ -75,7 +75,7 @@ export default function Navbar() {
                   <span className="sr-only">Open user menu</span>
                   {
                     userData==undefined?"":
-                    <img src={userData.picture} alt="Profile" className="w-16 h-16 rounded-full" />
+                    <img src={userData.picture} alt="Profile" className="w-10 h-10 rounded-full" />
                   }
                 </MenuButton>
               </div>
