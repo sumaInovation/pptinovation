@@ -38,7 +38,7 @@ const SignupPage = () => {
             onSuccess={handleLoginSuccess}
             onError={handleLoginFailure}
             useOneTap
-            redirectUri="https://pptinovation.vercel.app/"
+          
           />
         </div>
 
