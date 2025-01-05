@@ -1,43 +1,85 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import {jwtDecode} from 'jwt-decode';
-
-// Create GoogleAuthContext
+import React, { createContext, useState, useContext, useEffect } from "react";
 export const GoogleAuthContext = createContext();
 
-// GoogleAuthProvider to wrap the app
 export const GoogleAuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
+    const URL="https://googlesheet-yuetcisb.b4a.run/"
 
-  // Load user data from localStorage when the app loads
   useEffect(() => {
-    const savedUserData = localStorage.getItem('userData');
-    if (savedUserData) {
-      setUserData(JSON.parse(savedUserData)); // Parse and set user data from localStorage
-    }
+    // Fetch user profile from the server on app load
+    fetch("https://googlesheet-yuetcisb.b4a.run/user/profile", { credentials: "include" }) // Include cookies
+      .then((res) => res.json())
+      .then((data) =>{ setUserData(data)
+        
+      })
+      .catch((err) => console.error("Error fetching profile:", err));
   }, []);
 
-  // Save user data to localStorage after login success
-  const handleLoginSuccess = (response) => {
-    const decodedData = jwtDecode(response.credential); // Decode the JWT token
-    setUserData(decodedData); // Save the user data in state
-    localStorage.setItem('userData', JSON.stringify(decodedData)); // Save data in localStorage
+  const handleLoginSuccess = async (response) => {
+    const token=response.credential
+    
+      try {
+        const response = await fetch("https://googlesheet-yuetcisb.b4a.run/user/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            token
+          }),
+          credentials: "include", // Include cookies for session tokens
+        });
+  
+        if (response.ok) {
+          const data = await response.json(); // Parse JSON response
+         
+          
+            
+        } else {
+          const errorData = await response.json();
+          
+        }
+      } catch (err) {
+        console.error("Error:", err);
+        
+      }
+    
+
+    
+
+    // //Refetch user profile
+    fetch("https://googlesheet-yuetcisb.b4a.run/user/profile", { credentials: "include" })
+      .then((res) => res.json())
+      .then((data) =>{ setUserData(data)
+        console.log(data)
+      });
   };
 
-  const handleLoginFailure = (error) => {
-    console.error('Login Failed:', error);
-  };
-
-  const handleLogout = () => {
-    setUserData(null); // Clear user data from state
-    localStorage.removeItem('userData'); // Remove user data from localStorage
+  const handleLogout = async () => {
+     
+    fetch("https://googlesheet-yuetcisb.b4a.run/user/logout", {
+      method: "POST",
+      credentials: "include", // Send cookies with the request
+    })
+      .then((res) => {
+        if (res.ok) {
+        
+          setUserData(null); // Clear user from context
+          localStorage.removeItem("authToken"); // Remove user data from localStorage (if used)
+          sessionStorage.removeItem("authToken"); // Remove user data from sessionStorage (if used)
+        } else {
+          console.error("Logout failed");
+        }
+      })
+      .catch((err) => console.error("Error logging out:", err));
   };
 
   return (
-    <GoogleAuthContext.Provider value={{ userData, handleLoginSuccess, handleLoginFailure, handleLogout }}>
+    <GoogleAuthContext.Provider value={{ userData, handleLoginSuccess, handleLogout }}>
       {children}
     </GoogleAuthContext.Provider>
   );
 };
 
-// Custom hook to access context
 export const useGoogleContext = () => useContext(GoogleAuthContext);
+
