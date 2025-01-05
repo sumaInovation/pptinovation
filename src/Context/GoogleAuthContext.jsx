@@ -41,7 +41,7 @@ export const GoogleAuthProvider = ({ children }) => {
           console.log(errorData)
         }
       } catch (err) {
-        console.error("Error:", err);
+        console.error({message:"error1"});
         
       }
     
