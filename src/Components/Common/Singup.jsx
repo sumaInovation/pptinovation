@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { GoogleLogin } from '@react-oauth/google';
-import { useGoogleContext } from './GoogleAuthContext';
+import { useGoogleContext } from '../../Context/GoogleAuthContext';
 
 const SignupPage = () => {
    

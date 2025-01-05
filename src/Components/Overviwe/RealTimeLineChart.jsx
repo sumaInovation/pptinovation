@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { motion } from "framer-motion";
-import { useWebSocket } from '../Common/WebSocketContext';
+import { useWebSocket } from '../../Context/WebSocketContext';
 const RealTimeLineChart = () => {
 	// State to hold the data points for the chart
 	const [lineData, setLineData] = useState([]);

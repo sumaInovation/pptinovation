@@ -2,7 +2,7 @@ import React, { useState,useContext, useEffect } from "react";
 import ParameterMenu from '../Components/Report/ParameterMenu'
 import Chart from "../Components/Report/Chart";
 import Rawdata from '../Components/Report/Rawdata'
-import { useGoogleContext } from '../Components/Common/GoogleAuthContext';
+import { useGoogleContext } from '../Context/GoogleAuthContext';
 
 const Reports = () => {
  const{userData}=useGoogleContext();

@@ -2,7 +2,7 @@ import React from 'react'
 
 import Targetproduction from '../Components/Analytics/Targetproduction'
 import Barchart from '../Components/Analytics/Barchart'
-import { useGoogleContext } from '../Components/Common/GoogleAuthContext';
+import { useGoogleContext } from '../Context/GoogleAuthContext';
 const Analytics = () => {
    const{userData}=useGoogleContext();
   if (!userData) {
