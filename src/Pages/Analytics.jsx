@@ -20,6 +20,10 @@ const Analytics = () => {
 
         </div>
       </main>
+
+      <div >
+     
+      </div>
     </div>
   )
 }
