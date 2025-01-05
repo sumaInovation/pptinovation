@@ -3,11 +3,12 @@ export const GoogleAuthContext = createContext();
 
 export const GoogleAuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
-    const URL="https://googlesheet-yuetcisb.b4a.run/"
+    const URL="https://googlesheet-yuetcisb.b4a.run/user/"
+    //const URL="http://localhost:5000/user"
 
   useEffect(() => {
     // Fetch user profile from the server on app load
-    fetch("https://googlesheet-yuetcisb.b4a.run/user/profile", { credentials: "include" }) // Include cookies
+    fetch(`${URL}/profile`, { credentials: "include" }) // Include cookies
       .then((res) => res.json())
       .then((data) =>{ setUserData(data)
         
@@ -19,7 +20,7 @@ export const GoogleAuthProvider = ({ children }) => {
     const token=response.credential
     
       try {
-        const response = await fetch("https://googlesheet-yuetcisb.b4a.run/user/login", {
+        const response = await fetch(`${URL}/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -32,12 +33,12 @@ export const GoogleAuthProvider = ({ children }) => {
   
         if (response.ok) {
           const data = await response.json(); // Parse JSON response
-         
+         console.log(data)
           
             
         } else {
           const errorData = await response.json();
-          
+          console.log(errorData)
         }
       } catch (err) {
         console.error("Error:", err);
@@ -48,7 +49,7 @@ export const GoogleAuthProvider = ({ children }) => {
     
 
     // //Refetch user profile
-    fetch("https://googlesheet-yuetcisb.b4a.run/user/profile", { credentials: "include" })
+    fetch(`${URL}/profile`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) =>{ setUserData(data)
         console.log(data)
@@ -57,7 +58,7 @@ export const GoogleAuthProvider = ({ children }) => {
 
   const handleLogout = async () => {
      
-    fetch("https://googlesheet-yuetcisb.b4a.run/user/logout", {
+    fetch(`${URL}/logout`, {
       method: "POST",
       credentials: "include", // Send cookies with the request
     })

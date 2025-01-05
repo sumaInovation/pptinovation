@@ -30,10 +30,11 @@ const Overviwepage = () => {
 				if (!response.ok) {
 					throw new Error('Network response was not ok');
 				}
+				
 				return response.json();  // Read the response body as JSON
 			})
 			.then(data => {
-
+				console.log(data)
 				const TodatToTRunTime = data.reduce((acc, item) => {
 
 					if (new Date(item[0]).getMonth() == new Date().getMonth() && item[4] == "RUNNING") acc[1] += parseInt(item[3], 10);
@@ -118,6 +119,7 @@ const Overviwepage = () => {
 				</div>
 
 			</main>
+			<button onClick={HTTPReq}  className='text-white'>HELLO</button>
 		</div>
 	)
 }
