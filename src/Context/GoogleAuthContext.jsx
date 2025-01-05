@@ -3,7 +3,7 @@ export const GoogleAuthContext = createContext();
 
 export const GoogleAuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
-    const URL="https://googlesheet-yuetcisb.b4a.run/user/"
+    const URL="https://googlesheet-yuetcisb.b4a.run/user"
     //const URL="http://localhost:5000/user"
 
   useEffect(() => {
