@@ -1,70 +1,96 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
+import { jwtDecode } from 'jwt-decode'
 export const GoogleAuthContext = createContext();
 
 export const GoogleAuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
-    const URL="https://googlesheet-yuetcisb.b4a.run/user"
-    //const URL="http://localhost:5000/user"
+  //const URL="https://googlesheet-yuetcisb.b4a.run/user"
+  const URL = "http://localhost:5000/user"
 
-  useEffect(() => {
-    // Fetch user profile from the server on app load
-    fetch(`${URL}/profile`, { credentials: "include" }) // Include cookies
-      .then((res) => res.json())
-      .then((data) =>{ setUserData(data)
-        
-      })
-      .catch((err) => console.error("Error fetching profile:", err));
-  }, []);
+  // useEffect(() => {
+  //   // Fetch user profile from the server on app load
+  //   fetch(`${URL}/profile`, { credentials: "include" }) // Include cookies
+  //     .then((res) => res.json())
+  //     .then((data) =>{ setUserData(data)
+
+  //     })
+  //     .catch((err) => console.error("Error fetching profile:", err));
+  // }, []);
 
   const handleLoginSuccess = async (response) => {
-    const token=response.credential
-    
-      try {
-        const response = await fetch(`${URL}/login`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            token
-          }),
-          credentials: "include", // Include cookies for session tokens
-        });
-  
-        if (response.ok) {
-          const data = await response.json(); // Parse JSON response
-         console.log(data)
-          
-            
-        } else {
-          const errorData = await response.json();
-          console.log(errorData)
-        }
-      } catch (err) {
-        console.error({message:"error1"});
-        
+
+
+    const token = response.credential
+    const decodedata = jwtDecode(token)
+    const { name, picture } = decodedata;
+    setUserData({ name, picture })
+    console.log(decodedata);
+    try {
+      const response = await fetch(`${URL}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token
+        }),
+      })
+      if(response.ok){
+        const response=await response.JSON();
+        console.log(response)
+      }else{
+        console.log("No response recived")
       }
-    
+    } catch (e) {
 
-    
+      console.error(e);
+    }
+    //   try {
+    //     const response = await fetch(`${URL}/login`, {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         token
+    //       }),
+    //       credentials: "include", // Include cookies for session tokens
+    //     });
 
-    // //Refetch user profile
-    fetch(`${URL}/profile`, { credentials: "include" })
-      .then((res) => res.json())
-      .then((data) =>{ setUserData(data)
-        console.log(data)
-      });
-  };
+    //     if (response.ok) {
+    //       const data = await response.json(); // Parse JSON response
+    //      console.log(data)
+
+
+    //     } else {
+    //       const errorData = await response.json();
+    //       console.log(errorData)
+    //     }
+    //   } catch (err) {
+    //     console.error({message:"error1"});
+
+  }
+
+
+
+
+  // //Refetch user profile
+  // fetch(`${URL}/profile`, { credentials: "include" })
+  //   .then((res) => res.json())
+  //   .then((data) =>{ setUserData(data)
+  //     console.log(data)
+  //   });
+  // };
 
   const handleLogout = async () => {
-     
+
     fetch(`${URL}/logout`, {
       method: "POST",
       credentials: "include", // Send cookies with the request
     })
       .then((res) => {
         if (res.ok) {
-        
+
           setUserData(null); // Clear user from context
           localStorage.removeItem("authToken"); // Remove user data from localStorage (if used)
           sessionStorage.removeItem("authToken"); // Remove user data from sessionStorage (if used)
