@@ -17,71 +17,45 @@ export const GoogleAuthProvider = ({ children }) => {
   //     .catch((err) => console.error("Error fetching profile:", err));
   // }, []);
 
-  const handleLoginSuccess = async (response) => {
+  const handleLoginSuccess = async (responsegoogle) => {
 
-
-    const token = response.credential
-    const decodedata = jwtDecode(token)
-    const { name, picture } = decodedata;
-    setUserData({ name, picture })
-    console.log(decodedata);
+    const token = responsegoogle.credential
     try {
-      const response = await fetch(`${URL}/login`, {
-        method: "POST",
+      // Make the POST request using fetch
+      const response = await fetch('http://localhost:5000/user/login', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json', // Inform the server that we're sending JSON
         },
-        body: JSON.stringify({
-          token
-        }),
-      })
-      if(response.ok){
-        const response=await response.JSON();
-        console.log(response)
-      }else{
-        console.log("No response recived")
-      }
-    } catch (e) {
+        body: JSON.stringify({ name: 'John', email: 'john@example.com' }), // Convert the object to a JSON string
+      });
 
-      console.error(e);
+      // Parse the response from the backend
+      const data = await response.json();
+      console.log(data.Message);  // Log the message from the server
+
+    } catch (error) {
+      console.error('Error sending data:', error);
     }
-    //   try {
-    //     const response = await fetch(`${URL}/login`, {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({
-    //         token
-    //       }),
-    //       credentials: "include", // Include cookies for session tokens
-    //     });
 
-    //     if (response.ok) {
-    //       const data = await response.json(); // Parse JSON response
-    //      console.log(data)
-
-
-    //     } else {
-    //       const errorData = await response.json();
-    //       console.log(errorData)
-    //     }
-    //   } catch (err) {
-    //     console.error({message:"error1"});
-
+    
+    
+  
+  
+//Refetch user profile(getting cookies for find user object)
+      //  try {
+      //       const response = await fetch('http://localhost:5000/user/profile', {
+      //         method: 'GET',
+      //         credentials: 'include',  // This sends the cookie with the request
+      //       });
+      
+      //       const data = await response.json();
+      //       console.log(data.message);  // Should say "Welcome john_doe!"
+      //     } catch (error) {
+      //       console.error('Error fetching profile:', error);
+      //     }
+  
   }
-
-
-
-
-  // //Refetch user profile
-  // fetch(`${URL}/profile`, { credentials: "include" })
-  //   .then((res) => res.json())
-  //   .then((data) =>{ setUserData(data)
-  //     console.log(data)
-  //   });
-  // };
-
   const handleLogout = async () => {
 
     fetch(`${URL}/logout`, {
