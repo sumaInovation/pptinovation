@@ -4,56 +4,75 @@ export const GoogleAuthContext = createContext();
 
 export const GoogleAuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
-  //const URL="https://googlesheet-yuetcisb.b4a.run/user"
-  const URL = "http://localhost:5000/user"
+  const URL="https://googlesheet-yuetcisb.b4a.run/user"
+  //const URL = "http://localhost:5000/user"
 
-  // useEffect(() => {
-  //   // Fetch user profile from the server on app load
-  //   fetch(`${URL}/profile`, { credentials: "include" }) // Include cookies
-  //     .then((res) => res.json())
-  //     .then((data) =>{ setUserData(data)
+  useEffect(() => {
+     // Fetch user profile from the server on app load
+     fetch("https://googlesheet-yuetcisb.b4a.run/user/profile", { credentials: "include" }) // Include cookies
+     .then((res) => res.json())
+     .then((data) =>{
+       const userDetials=jwtDecode(data.newtoken)
+       const user={
+         name:userDetials.name,
+         picture:userDetials.picture
+       }
+       
+      setUserData(user);
+      console.log(user)
 
-  //     })
-  //     .catch((err) => console.error("Error fetching profile:", err));
-  // }, []);
+     })
+     .catch((err) => console.error("Error fetching profile:", err));
+  }, []);
 
   const handleLoginSuccess = async (responsegoogle) => {
 
     const token = responsegoogle.credential
     try {
-      // Make the POST request using fetch
-      const response = await fetch('http://localhost:5000/user/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json', // Inform the server that we're sending JSON
-        },
-        body: JSON.stringify({ name: 'John', email: 'john@example.com' }), // Convert the object to a JSON string
+      
+      const response = await fetch('https://googlesheet-yuetcisb.b4a.run/user/login', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({token}), // Send the user value in the request body
+          credentials: 'include', // Include cookies with the request
       });
 
-      // Parse the response from the backend
-      const data = await response.json();
-      console.log(data.Message);  // Log the message from the server
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-    } catch (error) {
-      console.error('Error sending data:', error);
-    }
+      const data = await response.json();
+
+    
+
+     
+  } catch (error) {
+      console.error('Error setting cookie:', error.message);
+  }
 
     
     
   
   
 //Refetch user profile(getting cookies for find user object)
-      //  try {
-      //       const response = await fetch('http://localhost:5000/user/profile', {
-      //         method: 'GET',
-      //         credentials: 'include',  // This sends the cookie with the request
-      //       });
-      
-      //       const data = await response.json();
-      //       console.log(data.message);  // Should say "Welcome john_doe!"
-      //     } catch (error) {
-      //       console.error('Error fetching profile:', error);
-      //     }
+     // Fetch user profile from the server on app load
+    fetch("https://googlesheet-yuetcisb.b4a.run/user/profile", { credentials: "include" }) // Include cookies
+      .then((res) => res.json())
+      .then((data) =>{
+        const userDetials=jwtDecode(data.newtoken)
+        const user={
+          name:userDetials.name,
+          picture:userDetials.picture
+        }
+        
+       setUserData(user);
+       console.log(user)
+
+      })
+      .catch((err) => console.error("Error fetching profile:", err));
+
   
   }
   const handleLogout = async () => {
@@ -66,8 +85,8 @@ export const GoogleAuthProvider = ({ children }) => {
         if (res.ok) {
 
           setUserData(null); // Clear user from context
-          localStorage.removeItem("authToken"); // Remove user data from localStorage (if used)
-          sessionStorage.removeItem("authToken"); // Remove user data from sessionStorage (if used)
+          localStorage.removeItem("auth"); // Remove user data from localStorage (if used)
+          sessionStorage.removeItem("auth"); // Remove user data from sessionStorage (if used)
         } else {
           console.error("Logout failed");
         }
