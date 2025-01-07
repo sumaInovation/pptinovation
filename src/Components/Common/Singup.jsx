@@ -140,7 +140,7 @@ const Profile = () => {
   };
   
   const test = async () => {
-    console.log('hello')
+  
     try {
       const response = await fetch("https://googlesheet-yuetcisb.b4a.run/test", {
         method: "GET", // GET request
@@ -157,7 +157,7 @@ const Profile = () => {
       }
     } catch (err) {
     
-      console.log("test")
+      console.log("test get error")
     }
   };
   
