@@ -25,7 +25,7 @@ export const GoogleAuthProvider = ({ children }) => {
      .catch((err) => console.error("Error fetching profile:", err));
   }, []);
 
-  const handleLoginSuccess = async (responsegoogle) => {
+  const handleLoginSuccess = async (response) => {
 
     const id_token = response.tokenId; // Extract ID token from Google response
     try {
