@@ -7,27 +7,28 @@ export const GoogleAuthProvider = ({ children }) => {
     const URL="https://googlesheet-yuetcisb.b4a.run"
   //const URL = "http://localhost:5000"
 
-  useEffect(() => {
-     // Fetch user profile from the server on app load
-     fetch(`${URL}/user/profile`, { credentials: "include" }) // Include cookies
-     .then((res) => res.json())
-     .then((data) =>{
-       const userDetials=jwtDecode(data.newtoken)
-       const user={
-         name:userDetials.name,
-         picture:userDetials.picture
-       }
+  // useEffect(() => {
+  //    // Fetch user profile from the server on app load
+  //    fetch(`${URL}/user/profile`, { credentials: "include" }) // Include cookies
+  //    .then((res) => res.json())
+  //    .then((data) =>{
+  //      const userDetials=jwtDecode(data.newtoken)
+  //      const user={
+  //        name:userDetials.name,
+  //        picture:userDetials.picture
+  //      }
        
-      setUserData(user);
-      console.log(user)
+  //     setUserData(user);
+  //     console.log(user)
 
-     })
-     .catch((err) => console.error("Error fetching profile:", err));
-  }, []);
+  //    })
+  //    .catch((err) => console.error("Error fetching profile:", err));
+  // }, []);
 
   const handleLoginSuccess = async (responsegoogle) => {
 
-    const token = responsegoogle.credential
+    //const token = responsegoogle.credential
+    const id_token = response.tokenId; // Extract ID token from Google response
     try {
       
       const response = await fetch(`${URL}/user/login`, {
@@ -35,7 +36,7 @@ export const GoogleAuthProvider = ({ children }) => {
           headers: {
               'Content-Type': 'application/json',
           },
-          body: JSON.stringify({token}), // Send the user value in the request body
+          body: JSON.stringify({id_token}), // Send the user value in the request body
           credentials: 'include', // Include cookies with the request
       });
 
@@ -44,7 +45,7 @@ export const GoogleAuthProvider = ({ children }) => {
       }
 
       const data = await response.json();
-    console.log(data);
+      console.log(data);
 
     
 
@@ -58,21 +59,21 @@ export const GoogleAuthProvider = ({ children }) => {
   
   
 //Refetch user profile(getting cookies for find user object)
-     // Fetch user profile from the server on app load
-    fetch("http://localhost:5000/user/profile", { credentials: "include" }) // Include cookies
-      .then((res) => res.json())
-      .then((data) =>{
-        const userDetials=jwtDecode(data.newtoken)
-        const user={
-          name:userDetials.name,
-          picture:userDetials.picture
-        }
+    //  // Fetch user profile from the server on app load
+    // fetch("http://localhost:5000/user/profile", { credentials: "include" }) // Include cookies
+    //   .then((res) => res.json())
+    //   .then((data) =>{
+    //     const userDetials=jwtDecode(data.newtoken)
+    //     const user={
+    //       name:userDetials.name,
+    //       picture:userDetials.picture
+    //     }
         
-       setUserData(user);
-       console.log(user)
+    //    setUserData(user);
+    //    console.log(user)
 
-      })
-      .catch((err) => console.error("Error fetching profile:", err));
+    //   })
+    //   .catch((err) => console.error("Error fetching profile:", err));
 
   
   }
