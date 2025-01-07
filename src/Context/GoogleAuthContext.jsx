@@ -57,6 +57,7 @@ export const GoogleAuthProvider = ({ children }) => {
         if(data.error==undefined)
          setUserData(data);
         window.location.reload();
+        console.log(data)
 
       })
       .catch((err) => console.error("Error fetching profile:", err));
