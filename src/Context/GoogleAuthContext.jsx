@@ -14,6 +14,7 @@ export const GoogleAuthProvider = ({ children }) => {
      .then((data) =>{
       if(data.error==undefined)
        setUserData(data)
+      console.log(data);
       
 
      })
