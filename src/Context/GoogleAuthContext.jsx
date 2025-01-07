@@ -52,7 +52,7 @@ export const GoogleAuthProvider = ({ children }) => {
   
 //Refetch user profile(getting cookies for find user object)
      // Fetch user profile from the server on app load
-    fetch("http://localhost:5000/user/profile", { credentials: "include" }) // Include cookies
+    fetch(`${URL}/user/profile`, { credentials: "include" }) // Include cookies
       .then((res) => res.json())
       .then((data) =>{
         if(data.error==undefined)
