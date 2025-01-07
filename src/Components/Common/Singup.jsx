@@ -139,7 +139,7 @@ const GoogleLoginButton = () => {
 
   return (
     <div className='mt-[80px]'>
-         <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID">
+         <GoogleOAuthProvider clientId="39253442113-0vh548enso8si0f1pjg27cbensc6qpba.apps.googleusercontent.com">
       <GoogleLogin onSuccess={handleSuccess} onError={handleFailure} />
     </GoogleOAuthProvider>
     </div>
