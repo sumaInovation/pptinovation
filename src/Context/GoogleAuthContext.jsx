@@ -12,9 +12,11 @@ export const GoogleAuthProvider = ({ children }) => {
      fetch(`${URL}/user/profile`, { credentials: "include" }) // Include cookies
      .then((res) => res.json())
      .then((data) =>{
-      if(data.error==undefined)
-       setUserData(data)
-      console.log(data);
+      if(data.error==undefined){
+        setUserData(data)
+        alert(data.name)
+      }
+   
       
 
      })
@@ -55,10 +57,12 @@ export const GoogleAuthProvider = ({ children }) => {
     fetch(`${URL}/user/profile`, { credentials: "include" }) // Include cookies
       .then((res) => res.json())
       .then((data) =>{
-        if(data.error==undefined)
-         setUserData(data);
-        window.location.reload();
-        console.log(data)
+        if(data.error==undefined){
+          setUserData(data);
+          window.location.reload();
+          alert(data.name)
+        }
+      
 
       })
       .catch((err) => {console.error("Error fetching profile:", err)
