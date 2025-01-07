@@ -14,7 +14,7 @@ export const GoogleAuthProvider = ({ children }) => {
      .then((data) =>{
       if(data.error==undefined)
        setUserData(data)
-       console.log(data)
+      
 
      })
      .catch((err) => console.error("Error fetching profile:", err));
@@ -54,7 +54,9 @@ export const GoogleAuthProvider = ({ children }) => {
     fetch("http://localhost:5000/user/profile", { credentials: "include" }) // Include cookies
       .then((res) => res.json())
       .then((data) =>{
-        setUserData(data)
+        if(data.error==undefined)
+         setUserData(data);
+        window.location.reload();
 
       })
       .catch((err) => console.error("Error fetching profile:", err));
