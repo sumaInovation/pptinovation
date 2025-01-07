@@ -61,7 +61,9 @@ export const GoogleAuthProvider = ({ children }) => {
         console.log(data)
 
       })
-      .catch((err) => console.error("Error fetching profile:", err));
+      .catch((err) => {console.error("Error fetching profile:", err)
+        alert(err);
+      });
 
   
   }
