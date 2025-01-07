@@ -127,28 +127,30 @@ function App() {
         console.error('Error:', error);
       });
   };
-   const setsession=async()=>{
-    await axios.get('https://googlesheet-yuetcisb.b4a.run/set-session',{
-      withCredentials: true, // Include cookies in this request
-    })  // Replace with your actual API URL
-    .then((response) => {
-     console.log(response)
-    })
-    .catch((err) => {
-      alert(err);
-    });
-   }
-   const getsession=async()=>{
-    await axios.get('https://googlesheet-yuetcisb.b4a.run/get-session',{
-      withCredentials: true, // Include cookies in this request
-    })  // Replace with your actual API URL
-    .then((response) => {
-     console.log(response)
-    })
-    .catch((err) => {
-      alert(err);
-    });
-   }
+   
+  // Set session
+  const setsession=async()=>{
+   await axios
+    .get('https://googlesheet-yuetcisb.b4a.run/set-session', { withCredentials: true })
+    .then((response) => console.log(response.data))
+    .catch((error) => console.error(error));
+  }
+
+
+// Get session
+const getsession=async()=>{
+await axios
+.get('https://googlesheet-yuetcisb.b4a.run/get-session', { withCredentials: true })
+.then((response) => console.log(response.data))
+.catch((error) => console.error(error));
+}
+// Logout
+const logout=async()=>{
+await axios
+.get('https://your-backend-url/logout', { withCredentials: true })
+.then((response) => console.log(response.data))
+.catch((error) => console.error(error));
+}
   return (
     <div className='mt-[80px] text-white'>
       <button onClick={setsession} className='bg-green-300 rounded-lg m-3 p-3'>Send POST Request</button>
