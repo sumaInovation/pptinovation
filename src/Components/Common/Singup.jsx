@@ -130,7 +130,7 @@ function App() {
    const getreq=async()=>{
     await axios.get('https://googlesheet-yuetcisb.b4a.run/userdata')  // Replace with your actual API URL
     .then((response) => {
-     alert(response);
+     console.log(response)
     })
     .catch((err) => {
       alert(err);
