@@ -75,6 +75,7 @@ export const GoogleAuthProvider = ({ children }) => {
           setUserData(null); // Clear user from context
           localStorage.removeItem("authToken"); // Remove user data from localStorage (if used)
           sessionStorage.removeItem("authToken"); // Remove user data from sessionStorage (if used)
+          console.log("Logout Scccessfull");
         } else {
           console.error("Logout failed");
         }
