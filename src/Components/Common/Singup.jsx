@@ -128,8 +128,9 @@ const GoogleLoginButton = () => {
       });
 
       alert(`Login successful! Role: ${res.data.role}`);
+      console.log("success")
     } catch (error) {
-      console.error('Error during login:', error);
+      console.log('Error');
     }
   };
 
