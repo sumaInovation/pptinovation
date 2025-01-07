@@ -58,6 +58,7 @@ export const GoogleAuthProvider = ({ children }) => {
         if(data.error==undefined)
          setUserData(data);
         window.location.reload();
+        alert(data.name);
        
 
       })
