@@ -135,7 +135,29 @@ const Profile = () => {
       }
     } catch (err) {
     
-      console.log(err)
+      console.log("error suma")
+    }
+  };
+  
+  const test = async () => {
+    console.log('hello')
+    try {
+      const response = await fetch("https://googlesheet-yuetcisb.b4a.run/test", {
+        method: "GET", // GET request
+        credentials: "include", // Include cookies for authentication
+      });
+
+      if (response.ok) {
+        const data = await response.json(); // Parse the response JSON
+        console.log(data)
+      } else {
+        const err = await response.json();
+        console.log(err)
+       
+      }
+    } catch (err) {
+    
+      console.log("test")
     }
   };
   
@@ -154,6 +176,8 @@ const Profile = () => {
      <button onClick={handleGoogleLogin} className="mt-[80px] text-white">Login with Google</button>
      <br/>
      <button onClick={fetchUserData} className="mt-[80px] text-white">Login with Google</button>
+     <br/>
+     <button onClick={fetchUserData} className="mt-[80px] text-white">TEST</button>
     </>
    
   );
