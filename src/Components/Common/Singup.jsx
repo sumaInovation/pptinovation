@@ -108,57 +108,55 @@
 //   );
 // };
 
-// export default SignupPage;
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
-function App() {
-  const [data, setData] = useState('');
-  
-  const handlePostRequest = () => {
-    axios.post('https://googlesheet-yuetcisb.b4a.run/userlogin', {
-      key: 'value',  // Replace with your actual data
-    })
-      .then((response) => {
-        setData(response.data);
-        console.log('Success:', response.data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+const API_URL = "https://googlesheet-yuetcisb.b4a.run/"; // Replace with your backend URL
+
+const App = () => {
+  const [sessionData, setSessionData] = useState(null);
+
+  // Set Session Data
+  const setSession = async () => {
+    try {
+      const response = await axios.post(
+        `${API_URL}/set-session`,
+        { name: "John Doe", role: "Admin" }, // Example data to send
+        { withCredentials: true } // Include cookies
+      );
+      console.log(response.data.message); // "Session data set successfully!"
+    } catch (error) {
+      console.error("Error setting session:", error);
+    }
   };
-   
-  // Set session
-  const setsession=async()=>{
-   await axios
-    .get('https://googlesheet-yuetcisb.b4a.run/set-session', { withCredentials: true })
-    .then((response) => console.log(response.data))
-    .catch((error) => console.error(error));
-  }
 
+  // Get Session Data
+  const getSession = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/get-session`, {
+        withCredentials: true, // Include cookies
+      });
+      setSessionData(response.data.user); // Set session data in state
+    } catch (error) {
+      console.error("Error fetching session data:", error);
+    }
+  };
 
-// Get session
-const getsession=async()=>{
-await axios
-.get('https://googlesheet-yuetcisb.b4a.run/get-session', { withCredentials: true })
-.then((response) => console.log(response.data))
-.catch((error) => console.error(error));
-}
-// Logout
-const logout=async()=>{
-await axios
-.get('https://your-backend-url/logout', { withCredentials: true })
-.then((response) => console.log(response.data))
-.catch((error) => console.error(error));
-}
   return (
-    <div className='mt-[80px] text-white'>
-      <button onClick={setsession} className='bg-green-300 rounded-lg m-3 p-3'>Send POST Request</button>
-      <br/>
-      <button onClick={getsession} className='bg-green-300 rounded-lg m-3 p-3'>Send GET Request</button>
-      
-    </div> 
+    <div>
+      <h1>Express Session Example</h1>
+      <button onClick={setSession}>Set Session</button>
+      <button onClick={getSession}>Get Session</button>
+
+      {sessionData && (
+        <div>
+          <h2>Session Data:</h2>
+          <p>Name: {sessionData.name}</p>
+          <p>Role: {sessionData.role}</p>
+        </div>
+      )}
+    </div>
   );
-}
+};
 
 export default App;
