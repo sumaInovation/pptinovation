@@ -128,7 +128,9 @@ function App() {
       });
   };
    const setsession=async()=>{
-    await axios.get('https://googlesheet-yuetcisb.b4a.run/set-session')  // Replace with your actual API URL
+    await axios.get('https://googlesheet-yuetcisb.b4a.run/set-session',{
+      withCredentials: true, // Include cookies in this request
+    })  // Replace with your actual API URL
     .then((response) => {
      console.log(response)
     })
@@ -137,7 +139,9 @@ function App() {
     });
    }
    const getsession=async()=>{
-    await axios.get('https://googlesheet-yuetcisb.b4a.run/get-session')  // Replace with your actual API URL
+    await axios.get('https://googlesheet-yuetcisb.b4a.run/get-session',{
+      withCredentials: true, // Include cookies in this request
+    })  // Replace with your actual API URL
     .then((response) => {
      console.log(response)
     })
