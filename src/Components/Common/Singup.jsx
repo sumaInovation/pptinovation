@@ -111,7 +111,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const API_URL = "https://googlesheet-yuetcisb.b4a.run/"; // Replace with your backend URL
+const API_URL = "https://googlesheet-yuetcisb.b4a.run"; // Replace with your backend URL
 
 const App = () => {
   const [sessionData, setSessionData] = useState(null);
