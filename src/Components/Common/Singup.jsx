@@ -118,7 +118,7 @@ const Profile = () => {
   const [user, setUser] = useState(null);
      
   const fetchUserData = async () => {
-    console.log('hello')
+    
     try {
       const response = await fetch("https://googlesheet-yuetcisb.b4a.run/profile", {
         method: "GET", // GET request
@@ -177,7 +177,7 @@ const Profile = () => {
      <br/>
      <button onClick={fetchUserData} className="mt-[80px] text-white">Login with Google</button>
      <br/>
-     <button onClick={fetchUserData} className="mt-[80px] text-white">TEST</button>
+     <button onClick={test} className="mt-[80px] text-white">TEST</button>
     </>
    
   );
