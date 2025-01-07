@@ -27,7 +27,7 @@ export const GoogleAuthProvider = ({ children }) => {
 
   const handleLoginSuccess = async (responsegoogle) => {
 
-    const token = responsegoogle.credential
+    const id_token = response.tokenId; // Extract ID token from Google response
     try {
       
       const response = await fetch(`${URL}/user/login`, {
@@ -35,7 +35,7 @@ export const GoogleAuthProvider = ({ children }) => {
           headers: {
               'Content-Type': 'application/json',
           },
-          body: JSON.stringify({token}), // Send the user value in the request body
+          body: JSON.stringify({id_token}), // Send the user value in the request body
           credentials: 'include', // Include cookies with the request
       });
 
@@ -44,7 +44,7 @@ export const GoogleAuthProvider = ({ children }) => {
       }
 
       const data = await response.json();
-    console.log(data);
+      console.log(data);
 
     
 
@@ -62,13 +62,9 @@ export const GoogleAuthProvider = ({ children }) => {
     fetch("http://localhost:5000/user/profile", { credentials: "include" }) // Include cookies
       .then((res) => res.json())
       .then((data) =>{
-        const userDetials=jwtDecode(data.newtoken)
-        const user={
-          name:userDetials.name,
-          picture:userDetials.picture
-        }
+        const { name, picture, email, role }=data;
         
-       setUserData(user);
+       setUserData(data);
        
 
       })
