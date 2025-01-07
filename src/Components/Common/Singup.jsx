@@ -112,75 +112,39 @@
 
 
 
-import React, { useEffect, useState } from "react";
+// src/components/GoogleLoginButton.jsx
+import React from 'react';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
 
-const Profile = () => {
-  const [user, setUser] = useState(null);
-     
-  const fetchUserData = async () => {
-    
+const GoogleLoginButton = () => {
+  const handleSuccess = async (response) => {
+    const { credential } = response;
+
     try {
-      const response = await fetch("https://googlesheet-yuetcisb.b4a.run/profile", {
-        method: "GET", // GET request
-        credentials: "include", // Include cookies for authentication
+      // Send the Google ID token to your backend
+      const res = await axios.post('https://googlesheet-yuetcisb.b4a.run/api/auth/google', {
+        token: credential,
       });
 
-      if (response.ok) {
-        const data = await response.json(); // Parse the response JSON
-        console.log(data)
-      } else {
-        const err = await response.json();
-        console.log(err)
-       
-      }
-    } catch (err) {
-    
-      console.log("error suma")
+      alert(`Login successful! Role: ${res.data.role}`);
+    } catch (error) {
+      console.error('Error during login:', error);
     }
   };
-  
-  const test = async () => {
-  
-    try {
-      const response = await fetch("https://googlesheet-yuetcisb.b4a.run/test", {
-        method: "GET", // GET request
-        credentials: "include", // Include cookies for authentication
-      });
 
-      if (response.ok) {
-        const data = await response.json(); // Parse the response JSON
-        console.log(data)
-      } else {
-        const err = await response.json();
-        console.log(err)
-       
-      }
-    } catch (err) {
-    
-      console.log("test get error")
-    }
-  };
-  
-
-  const handleGoogleLogin = () => {
-    window.location.href = "https://googlesheet-yuetcisb.b4a.run/auth/google";
+  const handleFailure = (error) => {
+    console.error('Login failed:', error);
   };
 
-  return user ? (
-    <div className="mt-[80px] text-white">
-      <h1>Welcome, {user.displayName}</h1>
-      <img src={user.photos[0].value} alt="Profile" />
+  return (
+    <div className='mt-[80px]'>
+         <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID">
+      <GoogleLogin onSuccess={handleSuccess} onError={handleFailure} />
+    </GoogleOAuthProvider>
     </div>
-  ) : (
-    <>
-     <button onClick={handleGoogleLogin} className="mt-[80px] text-white">Login with Google</button>
-     <br/>
-     <button onClick={fetchUserData} className="mt-[80px] text-white">Login with Google</button>
-     <br/>
-     <button onClick={test} className="mt-[80px] text-white">TEST</button>
-    </>
-   
+  
   );
 };
 
-export default Profile;
+export default GoogleLoginButton;
