@@ -113,49 +113,65 @@ import axios from "axios";
 
 const API_URL = "https://googlesheet-yuetcisb.b4a.run"; // Replace with your backend URL
 
+
+  
+
 const App = () => {
   const [sessionData, setSessionData] = useState(null);
 
-  // Set Session Data
-  const setSession = async () => {
-    try {
-      const response = await axios.post(
-        `${API_URL}/set-session`,
-        { name: "John Doe", role: "Admin" }, // Example data to send
-        { withCredentials: true } // Include cookies
-      );
-      console.log(response.data.message); // "Session data set successfully!"
-    } catch (error) {
-      console.error("Error setting session:", error);
-    }
-  };
+ 
+    const getSession = async () => {
+      try {
+        const response = await fetch("https://googlesheet-yuetcisb.b4a.run/get-session", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include", // Make sure credentials (cookies) are included
+        });
 
-  // Get Session Data
-  const getSession = async () => {
-    try {
-      const response = await axios.get(`${API_URL}/get-session`, {
-        withCredentials: true, // Include cookies
-      });
-      setSessionData(response.data.user); // Set session data in state
-    } catch (error) {
-      console.error("Error fetching session data:", error);
+        if (response.ok) {
+          const data = await response.json();
+          setSessionData(data.user); // Assuming 'user' is the key in response
+        } else {
+          console.error("Failed to fetch session data.");
+        }
+      } catch (error) {
+        console.error("Error fetching session data:", error);
+      }
+    };
+
+    const setSession = async () => {
+      try {
+        const response = await fetch("https://googlesheet-yuetcisb.b4a.run/set-session", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include", // Make sure credentials (cookies) are included
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+        console.log(data)
+        } else {
+          console.error("Failed to fetch session data.");
+        }
+      } catch (error) {
+        console.error("Error fetching session data:", error);
+      }
     }
-  };
+
+
+  
+
 
   return (
     <div className="mt-[80px] text-white">
       <h1>Express Session Example</h1>
       <button onClick={setSession}>Set Session</button>
       <button onClick={getSession}>Get Session</button>
-
-      {sessionData && (
-        <div>
-          <h2>Session Data:</h2>
-          <p>Name: {sessionData.name}</p>
-          <p>Role: {sessionData.role}</p>
-        </div>
-      )}
-    </div>
+  </div>
   );
 };
 
