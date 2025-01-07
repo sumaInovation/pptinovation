@@ -4,12 +4,12 @@ export const GoogleAuthContext = createContext();
 
 export const GoogleAuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
-  const URL="https://googlesheet-yuetcisb.b4a.run/user"
-  //const URL = "http://localhost:5000/user"
+    const URL="https://googlesheet-yuetcisb.b4a.run"
+  //const URL = "http://localhost:5000"
 
   useEffect(() => {
      // Fetch user profile from the server on app load
-     fetch("https://googlesheet-yuetcisb.b4a.run/user/profile", { credentials: "include" }) // Include cookies
+     fetch(`${URL}/user/profile`, { credentials: "include" }) // Include cookies
      .then((res) => res.json())
      .then((data) =>{
        const userDetials=jwtDecode(data.newtoken)
@@ -30,7 +30,7 @@ export const GoogleAuthProvider = ({ children }) => {
     const token = responsegoogle.credential
     try {
       
-      const response = await fetch('https://googlesheet-yuetcisb.b4a.run/user/login', {
+      const response = await fetch(`${URL}/user/login`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -44,6 +44,7 @@ export const GoogleAuthProvider = ({ children }) => {
       }
 
       const data = await response.json();
+    console.log(data);
 
     
 
@@ -58,7 +59,7 @@ export const GoogleAuthProvider = ({ children }) => {
   
 //Refetch user profile(getting cookies for find user object)
      // Fetch user profile from the server on app load
-    fetch("https://googlesheet-yuetcisb.b4a.run/user/profile", { credentials: "include" }) // Include cookies
+    fetch("http://localhost:5000/user/profile", { credentials: "include" }) // Include cookies
       .then((res) => res.json())
       .then((data) =>{
         const userDetials=jwtDecode(data.newtoken)
@@ -68,7 +69,7 @@ export const GoogleAuthProvider = ({ children }) => {
         }
         
        setUserData(user);
-       console.log(user)
+       
 
       })
       .catch((err) => console.error("Error fetching profile:", err));
@@ -77,7 +78,7 @@ export const GoogleAuthProvider = ({ children }) => {
   }
   const handleLogout = async () => {
 
-    fetch(`${URL}/logout`, {
+     await fetch(`${URL}/user/logout`, {
       method: "POST",
       credentials: "include", // Send cookies with the request
     })
