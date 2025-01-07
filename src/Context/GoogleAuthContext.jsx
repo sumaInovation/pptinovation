@@ -3,7 +3,7 @@ import { jwtDecode } from 'jwt-decode'
 export const GoogleAuthContext = createContext();
 
 export const GoogleAuthProvider = ({ children }) => {
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState([]);
   const URL="https://googlesheet-yuetcisb.b4a.run"
  // const URL = "http://localhost:5000"
 
@@ -12,10 +12,10 @@ export const GoogleAuthProvider = ({ children }) => {
      fetch(`${URL}/user/profile`, { credentials: "include" }) // Include cookies
      .then((res) => res.json())
      .then((data) =>{
-      if(data.error==undefined){
+      
         setUserData(data)
         alert(data.name)
-      }
+      
    
       
 
@@ -57,11 +57,11 @@ export const GoogleAuthProvider = ({ children }) => {
     fetch(`${URL}/user/profile`, { credentials: "include" }) // Include cookies
       .then((res) => res.json())
       .then((data) =>{
-        if(data.error==undefined){
+        
           setUserData(data);
           window.location.reload();
           alert(data.name)
-        }
+        
       
 
       })
@@ -80,7 +80,7 @@ export const GoogleAuthProvider = ({ children }) => {
       .then((res) => {
         if (res.ok) {
 
-          setUserData(null); // Clear user from context
+          setUserData([]); // Clear user from context
           localStorage.removeItem("authToken"); // Remove user data from localStorage (if used)
           sessionStorage.removeItem("authToken"); // Remove user data from sessionStorage (if used)
           console.log("Logout Scccessfull");

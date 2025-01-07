@@ -29,7 +29,7 @@ const SignupPage = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
-        { !userData && <div>
+        { !userData.name && <div>
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Sign Up</h2>
 
         {/* Google Login Button */}
@@ -48,7 +48,7 @@ const SignupPage = () => {
         </div>
 }
         {/* Traditional Signup Form */}
-     {!userData &&    <form onSubmit={handleSubmit}>
+     {!userData.name &&    <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <input
               type="text"
@@ -88,7 +88,7 @@ const SignupPage = () => {
         </form>}
 
         {/* Google User Information (if logged in via Google) */}
-        {userData && (
+        {userData.name && (
           <div className="mt-6 text-center">
             <p className="text-gray-600">WELCOME</p>
             <p className="font-semibold">{userData.name}</p>
