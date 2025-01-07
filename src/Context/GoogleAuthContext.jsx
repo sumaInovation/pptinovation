@@ -25,9 +25,9 @@ export const GoogleAuthProvider = ({ children }) => {
      .catch((err) => console.error("Error fetching profile:", err));
   }, []);
 
-  const handleLoginSuccess = async (response) => {
+  const handleLoginSuccess = async (responsegoogle) => {
 
-    const id_token = response.tokenId; // Extract ID token from Google response
+    const token = responsegoogle.credential
     try {
       
       const response = await fetch(`${URL}/user/login`, {
@@ -35,7 +35,7 @@ export const GoogleAuthProvider = ({ children }) => {
           headers: {
               'Content-Type': 'application/json',
           },
-          body: JSON.stringify({id_token}), // Send the user value in the request body
+          body: JSON.stringify({token}), // Send the user value in the request body
           credentials: 'include', // Include cookies with the request
       });
 
@@ -44,7 +44,7 @@ export const GoogleAuthProvider = ({ children }) => {
       }
 
       const data = await response.json();
-      console.log(data);
+    console.log(data);
 
     
 
@@ -62,10 +62,14 @@ export const GoogleAuthProvider = ({ children }) => {
     fetch("http://localhost:5000/user/profile", { credentials: "include" }) // Include cookies
       .then((res) => res.json())
       .then((data) =>{
-        const { name, picture, email, role }=data;
+        const userDetials=jwtDecode(data.newtoken)
+        const user={
+          name:userDetials.name,
+          picture:userDetials.picture
+        }
         
-       setUserData(data);
-       
+       setUserData(user);
+       console.log(user)
 
       })
       .catch((err) => console.error("Error fetching profile:", err));
