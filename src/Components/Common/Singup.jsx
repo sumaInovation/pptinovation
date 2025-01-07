@@ -92,6 +92,7 @@ const SignupPage = () => {
           <div className="mt-6 text-center">
             <p className="text-gray-600">WELCOME</p>
             <p className="font-semibold">{userData.name}</p>
+            <p className="font-semibold">You are {userData.role}</p>
             
             <img src={userData.picture} alt="profile" className="w-16 h-16 rounded-full mx-auto mt-2" />
             <button
