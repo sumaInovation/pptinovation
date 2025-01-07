@@ -143,7 +143,7 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className="mt-[80px] text-white">
       <h1>Express Session Example</h1>
       <button onClick={setSession}>Set Session</button>
       <button onClick={getSession}>Get Session</button>
