@@ -127,8 +127,17 @@ function App() {
         console.error('Error:', error);
       });
   };
-   const getreq=async()=>{
-    await axios.get('https://googlesheet-yuetcisb.b4a.run/getuserdata')  // Replace with your actual API URL
+   const setsession=async()=>{
+    await axios.get('https://googlesheet-yuetcisb.b4a.run/set-session')  // Replace with your actual API URL
+    .then((response) => {
+     console.log(response)
+    })
+    .catch((err) => {
+      alert(err);
+    });
+   }
+   const getsession=async()=>{
+    await axios.get('https://googlesheet-yuetcisb.b4a.run/get-session')  // Replace with your actual API URL
     .then((response) => {
      console.log(response)
     })
@@ -138,9 +147,9 @@ function App() {
    }
   return (
     <div className='mt-[80px] text-white'>
-      <button onClick={handlePostRequest} className='bg-green-300 rounded-lg m-3 p-3'>Send POST Request</button>
+      <button onClick={setsession} className='bg-green-300 rounded-lg m-3 p-3'>Send POST Request</button>
       <br/>
-      <button onClick={getreq} className='bg-green-300 rounded-lg m-3 p-3'>Send GET Request</button>
+      <button onClick={getsession} className='bg-green-300 rounded-lg m-3 p-3'>Send GET Request</button>
       
     </div> 
   );
