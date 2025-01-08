@@ -133,6 +133,7 @@ const App = () => {
         if (response.ok) {
           const data = await response.json();
           setSessionData(data.user); // Assuming 'user' is the key in response
+          
         } else {
           console.error("Failed to fetch session data.");
         }
