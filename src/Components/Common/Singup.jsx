@@ -31,7 +31,12 @@ const SignupPage = () => {
      axios.get('https://googlesheet-yuetcisb.b4a.run/profile',{
       withCredentials: true, // Send cookies or credentials with the request
      }).then(res=>{
-      console.log(res.data);
+            const decodedata=jwtDecode(res.data);
+             const{name,email,picture}=decodedata;
+             console.log(name);
+             
+
+
      }). catch (error=> {
     console.error('Error sending POST request:', error);
   })
