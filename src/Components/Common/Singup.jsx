@@ -28,6 +28,7 @@ const SignupPage = () => {
     // Handle traditional signup here
   };
   const getProfiledta=async()=>{
+    alert('hello')
      axios.get('https://googlesheet-yuetcisb.b4a.run/profile',{
       withCredentials: true, // Send cookies or credentials with the request
      }).then(res=>{
@@ -40,6 +41,7 @@ const SignupPage = () => {
 
      }). catch (error=> {
     console.error('Error sending POST request:', error);
+    alert('hello')
   })
 }
 
