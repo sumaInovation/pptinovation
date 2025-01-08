@@ -9,9 +9,7 @@ export const GoogleAuthProvider = ({ children }) => {
   const URL="https://googlesheet-yuetcisb.b4a.run"
  // const URL = "http://localhost:5000"
 
-useEffect(()=>{
-  getProfiledta();
-})
+
   const handleLoginSuccess = async (response) => {
     
     
@@ -31,23 +29,10 @@ useEffect(()=>{
       } catch (error) {
         console.error('Error sending POST request:', error);
       }
-      getProfiledta();  
+       
   
    }
-   const getProfiledta=async()=>{
-    const cookieValue = Cookies.get('token');
-       try{
-    const res = await axios.post('https://googlesheet-yuetcisb.b4a.run/profile', cookieValue,{
-      withCredentials: true, // Send cookies or credentials with the request
-      headers: {
-        'Content-Type': 'application/json',
-      }});
-      console.log(res.data);
-  } catch (error) {
-    console.error('Error sending POST request:', error);
-  }
-
-   }
+   
   const handleLogout = async () => {
     axios.get('https://googlesheet-yuetcisb.b4a.run/deleteCookie',{ withCredentials: true }).then((res) =>{
       console.log(res.data)

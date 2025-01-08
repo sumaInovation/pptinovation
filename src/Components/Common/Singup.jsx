@@ -28,20 +28,16 @@ const SignupPage = () => {
     // Handle traditional signup here
   };
   const getProfiledta=async()=>{
-    const cookieValue = Cookies.get('token');
-    console.log('cookieValue is',cookieValue)
-       try{
-    const res = await axios.post('https://googlesheet-yuetcisb.b4a.run/profile', cookieValue,{
+     axios.get('https://googlesheet-yuetcisb.b4a.run/profile',{
       withCredentials: true, // Send cookies or credentials with the request
-      headers: {
-        'Content-Type': 'application/json',
-      }});
+     }).then(res=>{
       console.log(res.data);
-  } catch (error) {
+     }). catch (error=> {
     console.error('Error sending POST request:', error);
-  }
+  })
+}
 
-   }
+   
 
   return (
     <div className='my-[80px] text-white'>
