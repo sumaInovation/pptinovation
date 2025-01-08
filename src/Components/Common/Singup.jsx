@@ -33,7 +33,7 @@ const SignupPage = () => {
      }).then(res=>{
             const decodedata=jwtDecode(res.data);
              const{name,email,picture}=decodedata;
-             console.log(name);
+             console.log(decodedata);
              
 
 
