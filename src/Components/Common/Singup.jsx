@@ -31,7 +31,8 @@ const SignupPage = () => {
      axios.get('https://googlesheet-yuetcisb.b4a.run/profile',{
       withCredentials: true, // Send cookies or credentials with the request
      }).then(res=>{
-           console.log('success')
+
+           console.log(res.data)
              
              }). catch (error=> {
         console.log('error');
