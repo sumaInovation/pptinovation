@@ -13,7 +13,7 @@ export const GoogleAuthProvider = ({ children }) => {
     
       try {
         const data = {
-          name: 'sumanga',
+          name: 'wimaladasa',
           email: 'sumanga0000@gmail.com',
         };
   
