@@ -29,7 +29,7 @@ export const GoogleAuthProvider = ({ children }) => {
       } catch (error) {
         console.error('Error sending POST request:', error);
       }
-       
+      getProfiledta();  
   
    }
    const getProfiledta=async()=>{
