@@ -169,7 +169,7 @@ const App = () => {
     };
 
     return (
-        <div style={{ padding: '20px' } } className='mt-[80px] text-white'>
+        <div style={{ padding: '20px' } } className='mt-[80px] text-black'>
             <h1>Cookie Management with React and Node.js</h1>
 
             <div className='m-3'>
@@ -199,7 +199,7 @@ const App = () => {
                 />
                 <button onClick={handleGetCookie}>Get Cookie</button>
                 {retrievedCookie && (
-                    <p>
+                    <p className='text-white'>
                         Retrieved Cookie: <strong>{retrievedCookie}</strong>
                     </p>
                 )}
