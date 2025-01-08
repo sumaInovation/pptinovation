@@ -9,7 +9,9 @@ export const GoogleAuthProvider = ({ children }) => {
   const URL="https://googlesheet-yuetcisb.b4a.run"
  // const URL = "http://localhost:5000"
 
-
+useEffect(()=>{
+  getProfiledta();
+})
   const handleLoginSuccess = async (response) => {
     
     
@@ -25,7 +27,7 @@ export const GoogleAuthProvider = ({ children }) => {
           headers: {
             'Content-Type': 'application/json',
           }});
-          console.log(res);
+          console.log(res.data);
       } catch (error) {
         console.error('Error sending POST request:', error);
       }
@@ -40,7 +42,7 @@ export const GoogleAuthProvider = ({ children }) => {
       headers: {
         'Content-Type': 'application/json',
       }});
-      console.log(res);
+      console.log(res.data);
   } catch (error) {
     console.error('Error sending POST request:', error);
   }
