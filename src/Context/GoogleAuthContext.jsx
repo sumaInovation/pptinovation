@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { jwtDecode } from 'jwt-decode'
 import axios from 'axios';
+import { em } from "framer-motion/client";
 export const GoogleAuthContext = createContext();
 
 export const GoogleAuthProvider = ({ children }) => {
@@ -10,15 +11,16 @@ export const GoogleAuthProvider = ({ children }) => {
 
 
   const handleLoginSuccess = async (response) => {
-       const token=response.credential
-       
+    const idToken ="123" // Google ID Token
+    
+       const decodedata=jwtDecode(response.credential);
+       const{name,email,picture}=decodedata;
+       const user={name,email,picture}
+       console.log(user)
       try {
-        // const data = {
-        //   name: 'wimaladasa',
-        //   email: 'sumanga0000@gmail.com',
-        // };
+        
   
-        const res = await axios.post('https://googlesheet-yuetcisb.b4a.run/post', token,{
+        const res = await axios.post('https://googlesheet-yuetcisb.b4a.run/login', user,{
           withCredentials: true, // Send cookies or credentials with the request
           headers: {
             'Content-Type': 'application/json',
