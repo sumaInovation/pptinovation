@@ -13,7 +13,7 @@ const SignupPage = () => {
     email: '',
     password: '',
   });
-
+const [newtoken,setnewtoken]=useState('no token')
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -33,6 +33,7 @@ const SignupPage = () => {
      }).then(res=>{
 
            console.log(res.data)
+           setnewtoken(res.data.token)
              
              }). catch (error=> {
         console.log('error data fetching');
@@ -44,7 +45,7 @@ const SignupPage = () => {
   return (
     <div className='my-[80px] text-white'>
    <button onClick={getProfiledta}>press</button>
-    
+    <p>{newtoken}</p>
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
         { !userData && <div>
