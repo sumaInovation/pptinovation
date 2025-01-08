@@ -17,7 +17,11 @@ export const GoogleAuthProvider = ({ children }) => {
           email: 'sumanga0000@gmail.com',
         };
   
-        const res = await axios.post('https://googlesheet-yuetcisb.b4a.run/posts', data);
+        const res = await axios.post('https://googlesheet-yuetcisb.b4a.run/posts', data,{
+          withCredentials: true, // Send cookies or credentials with the request
+          headers: {
+            'Content-Type': 'application/json',
+          }});
           console.log(res);
       } catch (error) {
         console.error('Error sending POST request:', error);
@@ -30,6 +34,11 @@ export const GoogleAuthProvider = ({ children }) => {
       console.log(res.data)
     })
    };
+   const setcookies=async()=>{
+    axios.get('https://googlesheet-yuetcisb.b4a.run',{ withCredentials: true }).then((res) =>{
+      console.log(res.data)
+    })
+   }
 
   return (
     <GoogleAuthContext.Provider value={{ userData, handleLoginSuccess, handleLogout }}>
