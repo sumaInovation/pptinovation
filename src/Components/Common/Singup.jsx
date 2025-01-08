@@ -109,71 +109,39 @@
 // };
 
 import React, { useState } from "react";
-import axios from "axios";
+import axios from 'axios'
 
-const API_URL = "https://googlesheet-yuetcisb.b4a.run"; // Replace with your backend URL
+import Cookies from 'universal-cookie';
+//const API_URL = "https://googlesheet-yuetcisb.b4a.run"; // Replace with your backend URL
+const API_URL = "http://localhost:5000"; // Replace with your backend URL
+axios.defaults.withCredentials = true
 
+const cookies = new Cookies();
 
-  
 
 const App = () => {
-  const [sessionData, setSessionData] = useState(null);
+  const createCookie = () => {
+    axios.get('https://googlesheet-yuetcisb.b4a.run',{ withCredentials: true }).then((res) =>{
+      console.log(res.data)
+    })
+  }
+  const deleteCookie = () => {
+    axios.get('https://googlesheet-yuetcisb.b4a.run/deleteCookie',{ withCredentials: true }).then((res) =>{
+      console.log(res.data)
+    })
+  }
 
- 
-    const getSession = async () => {
-      try {
-        const response = await fetch("https://googlesheet-yuetcisb.b4a.run/get-session", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include", // Make sure credentials (cookies) are included
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setSessionData(data.user); // Assuming 'user' is the key in response
-          
-        } else {
-          console.error("Failed to fetch session data.");
-        }
-      } catch (error) {
-        console.error("Error fetching session data:", error);
-      }
-    };
-
-    const setSession = async () => {
-      try {
-        const response = await fetch("https://googlesheet-yuetcisb.b4a.run/set-session", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include", // Make sure credentials (cookies) are included
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-        console.log(data)
-        } else {
-          console.error("Failed to fetch session data.");
-        }
-      } catch (error) {
-        console.error("Error fetching session data:", error);
-      }
-    }
-
-
-  
-
-
-  return (
-    <div className="mt-[80px] text-white">
-      <h1>Express Session Example</h1>
-      <button onClick={setSession}>Set Session</button>
-      <button onClick={getSession}>Get Session</button>
-  </div>
-  );
-};
-
+return (
+<div className="App mt-[80px] text-white">
+<div className="App">
+      <h1>HTTP ONLY COOKIE DEMO</h1>
+			<div className="box">
+        <button  onClick={createCookie} className="bg-green-400 p-3 m-3 rounded-lg">Create Cookies</button>
+        <button className="bg-green-400 p-3 m-3 rounded-lg">Renew Cookies</button>
+        <button className="bg-green-400 p-3 m-3 rounded-lg" onClick={deleteCookie}>Delete Cookie</button>
+      </div>
+		</div>
+</div>
+);
+}
 export default App;
