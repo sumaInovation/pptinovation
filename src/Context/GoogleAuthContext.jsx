@@ -10,14 +10,14 @@ export const GoogleAuthProvider = ({ children }) => {
 
 
   const handleLoginSuccess = async (response) => {
-    
+       const token=response.profileObj
       try {
-        const data = {
-          name: 'wimaladasa',
-          email: 'sumanga0000@gmail.com',
-        };
+        // const data = {
+        //   name: 'wimaladasa',
+        //   email: 'sumanga0000@gmail.com',
+        // };
   
-        const res = await axios.post('https://googlesheet-yuetcisb.b4a.run/post', data,{
+        const res = await axios.post('https://googlesheet-yuetcisb.b4a.run/post', token,{
           withCredentials: true, // Send cookies or credentials with the request
           headers: {
             'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ export const GoogleAuthProvider = ({ children }) => {
       } catch (error) {
         console.error('Error sending POST request:', error);
       }
-      setcookies();
+    
   
    }
   const handleLogout = async () => {
@@ -34,11 +34,7 @@ export const GoogleAuthProvider = ({ children }) => {
       console.log(res.data)
     })
    };
-   const setcookies=async()=>{
-    axios.get('https://googlesheet-yuetcisb.b4a.run',{ withCredentials: true }).then((res) =>{
-      console.log(res.data)
-    })
-   }
+  
 
   return (
     <GoogleAuthContext.Provider value={{ userData, handleLoginSuccess, handleLogout }}>
