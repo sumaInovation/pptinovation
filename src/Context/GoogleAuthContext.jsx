@@ -10,7 +10,8 @@ export const GoogleAuthProvider = ({ children }) => {
 
 
   const handleLoginSuccess = async (response) => {
-       const token=response.profileObj
+       const token=response.credential
+       
       try {
         // const data = {
         //   name: 'wimaladasa',
