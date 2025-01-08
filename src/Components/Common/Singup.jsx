@@ -29,6 +29,7 @@ const SignupPage = () => {
   };
   const getProfiledta=async()=>{
     const cookieValue = Cookies.get('token');
+    console.log('cookieValue is',cookieValue)
        try{
     const res = await axios.post('https://googlesheet-yuetcisb.b4a.run/profile', cookieValue,{
       withCredentials: true, // Send cookies or credentials with the request
