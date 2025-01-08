@@ -35,11 +35,8 @@ const SignupPage = () => {
              const{Name,Email,Picture}=decodedata;
              console.log(decodedata);
              
-             
-
-
-     }). catch (error=> {
-    console.error('Error sending POST request:', error);
+             }). catch (error=> {
+    console.error('Error sending GET request:', error);
   })
 }
 
