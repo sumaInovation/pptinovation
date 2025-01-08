@@ -17,7 +17,7 @@ export const GoogleAuthProvider = ({ children }) => {
           email: 'sumanga0000@gmail.com',
         };
   
-        const res = await axios.post('https://googlesheet-yuetcisb.b4a.run/posts', data,{
+        const res = await axios.post('https://googlesheet-yuetcisb.b4a.run/post', data,{
           withCredentials: true, // Send cookies or credentials with the request
           headers: {
             'Content-Type': 'application/json',
