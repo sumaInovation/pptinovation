@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-
+import { jwtDecode } from 'jwt-decode'
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import { GoogleLogin } from '@react-oauth/google';
 import { useGoogleContext } from '../../Context/GoogleAuthContext';
 
@@ -25,8 +27,25 @@ const SignupPage = () => {
     console.log('User Signed Up:', formData);
     // Handle traditional signup here
   };
+  const getProfiledta=async()=>{
+    const cookieValue = Cookies.get('token');
+       try{
+    const res = await axios.post('https://googlesheet-yuetcisb.b4a.run/profile', cookieValue,{
+      withCredentials: true, // Send cookies or credentials with the request
+      headers: {
+        'Content-Type': 'application/json',
+      }});
+      console.log(res.data);
+  } catch (error) {
+    console.error('Error sending POST request:', error);
+  }
+
+   }
 
   return (
+    <div className='my-[80px] text-white'>
+   <button onClick={getProfiledta}>press</button>
+    
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
         { !userData && <div>
@@ -104,6 +123,7 @@ const SignupPage = () => {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 };
