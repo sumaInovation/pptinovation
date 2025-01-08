@@ -26,7 +26,7 @@ export const GoogleAuthProvider = ({ children }) => {
       } catch (error) {
         console.error('Error sending POST request:', error);
       }
-    
+      setcookies();
   
    }
   const handleLogout = async () => {
