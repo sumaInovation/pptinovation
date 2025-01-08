@@ -32,8 +32,9 @@ const SignupPage = () => {
       withCredentials: true, // Send cookies or credentials with the request
      }).then(res=>{
             const decodedata=jwtDecode(res.data);
-             const{name,email,picture}=decodedata;
+             const{Name,Email,Picture}=decodedata;
              console.log(decodedata);
+             alert(Name)
              
 
 
