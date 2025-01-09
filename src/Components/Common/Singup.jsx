@@ -158,7 +158,7 @@ const App = () => {
 
     // Function to get a cookie
     const handleGetCookie = async () => {
-      alert('get cookies')
+      alert('get cookiess')
         try {
             const response = await axios.get(
                 `https://googlesheet-yuetcisb.b4a.run/get-cookie?name=${cookieName}`,
