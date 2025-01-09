@@ -142,14 +142,16 @@ const Singup = () => {
       return null;
     }
   };
+  
   const getcokies=async()=>{
-    fetch("https://googlesheet-yuetcisb.b4a.run/set-cookie", {
-      method: "GET",
-      credentials: "include", // Ensures cookies are sent with the request
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
-    
+    try {
+      const response = await axios.get("https://googlesheet-yuetcisb.b4a.run/set-cookie", {
+        withCredentials: true, // To include cookies in the request
+      });
+      console.log("Response data:", response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error.response || error.message);
+    }
   }
  
   return (
