@@ -114,6 +114,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from "react-router-dom";
 import axios from 'axios';
+import Cookies from "js-cookie";
 const Singup = () => {
   axios.defaults.withCredentials = true;
   const[name,setName]=useState(null);
@@ -145,7 +146,7 @@ const Singup = () => {
       });
     }
     const logout = () => {
-      setUser(null);
+    
       Cookies.remove("token"); // Remove the JWT token
       window.location.href = "/"; // Redirect to homepage or login page
     };
