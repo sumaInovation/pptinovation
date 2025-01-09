@@ -145,7 +145,7 @@ const Singup = () => {
   
   const getcokies=async()=>{
     try {
-      const response = await axios.get("https://googlesheet-yuetcisb.b4a.run/set-cookie", {
+      const response = await axios.get("https://googlesheet-yuetcisb.b4a.run", {
         withCredentials: true, // To include cookies in the request
       });
       console.log("Response data:", response.data);
