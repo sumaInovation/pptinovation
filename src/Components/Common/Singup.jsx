@@ -122,7 +122,7 @@ const Singup = () => {
   const handleLogout = async () => {
     try {
       // Call the logout endpoint on the backend
-      await axios.get('https://googlesheet-yuetcisb.b4a.run/logout', { withCredentials: true });
+      await axios.get('https://googlesheet-yuetcisb.b4a.run/logout');
       
       // After successful logout, redirect or update UI
      // window.location.href = '/'; // Redirect to home or login page
