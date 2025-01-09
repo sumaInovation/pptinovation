@@ -1,7 +1,5 @@
 // import React, { useState } from 'react';
-// import { jwtDecode } from 'jwt-decode'
-// import axios from 'axios';
-// import Cookies from 'js-cookie';
+
 // import { GoogleLogin } from '@react-oauth/google';
 // import { useGoogleContext } from '../../Context/GoogleAuthContext';
 
@@ -13,7 +11,7 @@
 //     email: '',
 //     password: '',
 //   });
-// const [newtoken,setnewtoken]=useState('no token')
+
 //   const handleChange = (e) => {
 //     const { name, value } = e.target;
 //     setFormData((prevData) => ({
@@ -27,25 +25,8 @@
 //     console.log('User Signed Up:', formData);
 //     // Handle traditional signup here
 //   };
-//   const getProfiledta=async()=>{
-//      axios.get('https://googlesheet-yuetcisb.b4a.run/profile',{
-//       withCredentials: true, // Send cookies or credentials with the request
-//      }).then(res=>{
-
-//            console.log(res.data)
-//            setnewtoken(res.data.token)
-             
-//              }). catch (error=> {
-//         console.log('error data fetching');
-//   })
-// }
-
-   
 
 //   return (
-//     <div className='my-[80px] text-white'>
-//    <button onClick={getProfiledta}>press</button>
-//     <p>{newtoken}</p>
 //     <div className="flex justify-center items-center min-h-screen bg-gray-100">
 //       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
 //         { !userData && <div>
@@ -111,7 +92,7 @@
 //           <div className="mt-6 text-center">
 //             <p className="text-gray-600">WELCOME</p>
 //             <p className="font-semibold">{userData.name}</p>
-//             <p className="font-semibold">You are{userData.role}</p>
+//             <p className="font-semibold">You are{userData.name}</p>
             
 //             <img src={userData.picture} alt="profile" className="w-16 h-16 rounded-full mx-auto mt-2" />
 //             <button
@@ -124,87 +105,59 @@
 //         )}
 //       </div>
 //     </div>
-//     </div>
 //   );
 // };
-
 // export default SignupPage
 
 
 
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react'
+import { useLocation } from "react-router-dom";
 import axios from 'axios';
+const Singup = () => {
+  axios.defaults.withCredentials = true;
+  const[name,setName]=useState(null);
+  const handleLogout = async () => {
+    try {
+      // Call the logout endpoint on the backend
+      await axios.get('https://googlesheet-yuetcisb.b4a.run/logout', { withCredentials: true });
+      
+      // After successful logout, redirect or update UI
+     // window.location.href = '/'; // Redirect to home or login page
+    } catch (error) {
+      console.error("Error logging out12:", error);
+    }
+  };
+   const isAuthenticated = async () => {
+    try {
+      const response = await axios.get("https://googlesheet-yuetcisb.b4a.run/protected");
+      console.log(response.data.user)
 
-const App = () => {
-    const [cookieName, setCookieName] = useState('');
-    const [cookieValue, setCookieValue] = useState('');
-    const [retrievedCookie, setRetrievedCookie] = useState('');
+      setName(response.data.user.name)
+      return response.data; // Contains user info if authenticated
+    } catch (err) {
+      console.error("Authentication failed", err);
+      return null;
+    }
+  };
+  return (
+    <div className='mt-[80px] text-white'>
+      <button onClick={()=>{window.open(
+			`https://googlesheet-yuetcisb.b4a.run/auth/google`,
+			"_self"
+		);
+    }}>press</button>
+    <br/>
+    <button onClick={isAuthenticated
+    }>Logout</button>
 
-    // Function to set a cookie
-    const handleSetCookie = async () => {
-      alert('set cookies')
-        try {
-            const response = await axios.post(
-                'https://googlesheet-yuetcisb.b4a.run/set-cookie',
-                { name: cookieName, value: cookieValue },
-                { withCredentials: true } // Allow cookies
-            );
-            console.log(response.data.message);
-        } catch (error) {
-            console.error('Error setting cookie:', error.response.data);
-        }
-    };
-
-    // Function to get a cookie
-    const handleGetCookie = async () => {
+     {name && <div> <h1 className='text-4xl'>
+      Wellcome {name}
+     </h1>
      
-        try {
-            const response = await axios.get(
-                `https://googlesheet-yuetcisb.b4a.run/get-cookie?name=${cookieName}`,
-                { withCredentials: true } // Include cookies
-            );
-            alert('get cookiess')
-            setRetrievedCookie(response.data.value);
-        } catch (error) {
-            console.error('Error retrieving cookie:', error.response.data);
-            alert(error.response.data)
-        }
-    };
+     </div>}
+    </div>
+  )
+}
 
-    return (
-        <div className='mt-[80px] text-white'>
-            <h1>Cookie Management with React and Node.js</h1>
-
-            <div className='m-3'>
-                <h3 className='m-3'>Set a Cookie</h3>
-                <input
-                    type="text"
-                    placeholder="Cookie Name"
-                    value={cookieName}
-                    onChange={(e) => setCookieName(e.target.value)}
-                 className='text-black m-3 p-3 rounded-md' />
-                <input
-                    type="text"
-                    placeholder="Cookie Value"
-                    value={cookieValue}
-                    onChange={(e) => setCookieValue(e.target.value)}
-                    className='text-black m-3 p-3 rounded-md' />
-                <button onClick={handleSetCookie} className='text white bg-green-400 m-3 p-3 rounded-lg'>Set Cookie</button>
-            </div>
-
-            <div style={{ marginTop: '20px' }}>
-                <h3>Get a Cookie</h3>
-                
-                <button onClick={handleGetCookie} className='text white bg-green-400 m-3 p-3 rounded-lg'>Get Cookie</button>
-                {retrievedCookie && (
-                    <p className='text-white'>
-                        Retrieved Cookie: <strong>{retrievedCookie}</strong>
-                    </p>
-                )}
-            </div>
-        </div>
-    );
-};
-
-export default App;
+export default Singup

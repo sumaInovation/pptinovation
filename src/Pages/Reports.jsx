@@ -2,10 +2,9 @@ import React, { useState,useContext, useEffect } from "react";
 import ParameterMenu from '../Components/Report/ParameterMenu'
 import Chart from "../Components/Report/Chart";
 import Rawdata from '../Components/Report/Rawdata'
-import { useGoogleContext } from '../Context/GoogleAuthContext';
+
 
 const Reports = () => {
- const{userData}=useGoogleContext();
 
   
   const [Result, setResult] = useState([]);
@@ -145,9 +144,7 @@ const Reports = () => {
     setTableoptions(selecitem);
 
   }
-  if (!userData) {
-    return <div className="mt-[100px] text-8xl">Please log in to see  Overviwe Page.</div>;
-  }
+  
 
   return (
     <div className="w-full max-w-7xl mx-auto mt-[80px]">
