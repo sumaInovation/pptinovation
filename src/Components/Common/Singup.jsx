@@ -143,6 +143,7 @@ const App = () => {
 
     // Function to set a cookie
     const handleSetCookie = async () => {
+      alert('set cookies')
         try {
             const response = await axios.post(
                 'https://googlesheet-yuetcisb.b4a.run/set-cookie',
@@ -157,6 +158,7 @@ const App = () => {
 
     // Function to get a cookie
     const handleGetCookie = async () => {
+      alert('get cookies')
         try {
             const response = await axios.get(
                 `https://googlesheet-yuetcisb.b4a.run/get-cookie?name=${cookieName}`,
