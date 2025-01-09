@@ -142,13 +142,19 @@ const Singup = () => {
       return null;
     }
   };
+  const getcokies=async()=>{
+    fetch("https://googlesheet-yuetcisb.b4a.run/set-cookie", {
+      method: "GET",
+      credentials: "include", // Ensures cookies are sent with the request
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+    
+  }
+ 
   return (
     <div className='mt-[80px] text-white'>
-      <button onClick={()=>{window.open(
-			`https://googlesheet-yuetcisb.b4a.run/auth/google`,
-			"_self"
-		);
-    }}>press</button>
+      <button onClick={getcokies}>press</button>
     <br/>
     <button onClick={isAuthenticated
     }>Logout</button>
