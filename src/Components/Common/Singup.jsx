@@ -191,12 +191,7 @@ const App = () => {
 
             <div style={{ marginTop: '20px' }}>
                 <h3>Get a Cookie</h3>
-                <input
-                    type="text"
-                    placeholder="Cookie Name"
-                    value={cookieName}
-                    onChange={(e) => setCookieName(e.target.value)}
-                    className='text-black m-3 p-3 rounded-md' />
+                
                 <button onClick={handleGetCookie} className='text white bg-green-400 m-3 p-3 rounded-lg'>Get Cookie</button>
                 {retrievedCookie && (
                     <p className='text-white'>
