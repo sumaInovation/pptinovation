@@ -144,6 +144,11 @@ const Singup = () => {
         console.error("Authentication failed:", error);
       });
     }
+    const logout = () => {
+      setUser(null);
+      Cookies.remove("token"); // Remove the JWT token
+      window.location.href = "/"; // Redirect to homepage or login page
+    };
   
   
   return (
@@ -155,6 +160,9 @@ const Singup = () => {
     }}>press</button>
     <br/>
     <button onClick={isAuthenticated
+    }>serch</button>
+    <br/>
+    <button onClick={logout
     }>Logout</button>
 
      {name && <div> <h1 className='text-4xl'>
