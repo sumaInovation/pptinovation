@@ -169,7 +169,7 @@ const App = () => {
     };
 
     return (
-        <div style={{ padding: '20px' } } className='mt-[80px] text-black'>
+        <div className='mt-[80px] text-white'>
             <h1>Cookie Management with React and Node.js</h1>
 
             <div className='m-3'>
@@ -179,14 +179,14 @@ const App = () => {
                     placeholder="Cookie Name"
                     value={cookieName}
                     onChange={(e) => setCookieName(e.target.value)}
-                 />
+                 className='text-black m-3 p-3 rounded-md' />
                 <input
                     type="text"
                     placeholder="Cookie Value"
                     value={cookieValue}
                     onChange={(e) => setCookieValue(e.target.value)}
-                />
-                <button onClick={handleSetCookie}>Set Cookie</button>
+                    className='text-black m-3 p-3 rounded-md' />
+                <button onClick={handleSetCookie} className='text white bg-green-400 m-3 p-3 rounded-lg'>Set Cookie</button>
             </div>
 
             <div style={{ marginTop: '20px' }}>
@@ -196,8 +196,8 @@ const App = () => {
                     placeholder="Cookie Name"
                     value={cookieName}
                     onChange={(e) => setCookieName(e.target.value)}
-                />
-                <button onClick={handleGetCookie}>Get Cookie</button>
+                    className='text-black m-3 p-3 rounded-md' />
+                <button onClick={handleGetCookie} className='text white bg-green-400 m-3 p-3 rounded-lg'>Get Cookie</button>
                 {retrievedCookie && (
                     <p className='text-white'>
                         Retrieved Cookie: <strong>{retrievedCookie}</strong>
