@@ -125,7 +125,7 @@ const Singup = () => {
       // After successful logout, redirect or update UI
      // window.location.href = '/'; // Redirect to home or login page
     } catch (error) {
-      console.error("Error logging out12:", error);
+      console.error("Error logging out:", error);
     }
   };
    const isAuthenticated = async () => {
