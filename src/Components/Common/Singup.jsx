@@ -155,10 +155,10 @@ const Singup = () => {
   }
 
   const readcookies=()=>{
-    const getCookie = (cookieName) => {
+    
       const cookies = document.cookie
      console.log(cookies)
-    };
+    
 
   }
  
