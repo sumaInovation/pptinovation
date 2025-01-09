@@ -153,12 +153,20 @@ const Singup = () => {
       console.error("Error fetching data:", error.response || error.message);
     }
   }
+
+  const readcookies=()=>{
+    const getCookie = (cookieName) => {
+      const cookies = document.cookie
+     console.log(cookies)
+    };
+
+  }
  
   return (
     <div className='mt-[80px] text-white'>
       <button onClick={getcokies}>press</button>
     <br/>
-    <button onClick={isAuthenticated
+    <button onClick={readcookies
     }>Logout</button>
 
      {name && <div> <h1 className='text-4xl'>
