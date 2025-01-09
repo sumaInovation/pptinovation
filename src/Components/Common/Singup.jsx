@@ -158,15 +158,17 @@ const App = () => {
 
     // Function to get a cookie
     const handleGetCookie = async () => {
-      alert('get cookiess')
+     
         try {
             const response = await axios.get(
                 `https://googlesheet-yuetcisb.b4a.run/get-cookie?name=${cookieName}`,
                 { withCredentials: true } // Include cookies
             );
+            alert('get cookiess')
             setRetrievedCookie(response.data.value);
         } catch (error) {
             console.error('Error retrieving cookie:', error.response.data);
+            
         }
     };
 
