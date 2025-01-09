@@ -117,6 +117,7 @@ import axios from 'axios';
 const Singup = () => {
   axios.defaults.withCredentials = true;
   const[name,setName]=useState(null);
+  const[picture,setPicture]=useState(null);
   const handleLogout = async () => {
     try {
       // Call the logout endpoint on the backend
@@ -134,6 +135,7 @@ const Singup = () => {
       console.log(response.data.user)
 
       setName(response.data.user.name)
+      setPicture(response.data.user.picture)
       return response.data; // Contains user info if authenticated
     } catch (err) {
       console.error("Authentication failed", err);
@@ -153,8 +155,9 @@ const Singup = () => {
 
      {name && <div> <h1 className='text-4xl'>
       Wellcome {name}
+
      </h1>
-     
+     <img src={picture} className='w-16 h-16'/>
      </div>}
     </div>
   )
