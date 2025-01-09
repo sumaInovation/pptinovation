@@ -168,7 +168,7 @@ const App = () => {
             setRetrievedCookie(response.data.value);
         } catch (error) {
             console.error('Error retrieving cookie:', error.response.data);
-            
+            alert(error.response.data)
         }
     };
 
