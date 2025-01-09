@@ -131,7 +131,7 @@ const Singup = () => {
   };
    const isAuthenticated = async () => {
     try {
-      const response = await axios.get("https://googlesheet-yuetcisb.b4a.run/protected");
+      const response = await axios.get("https://googlesheet-yuetcisb.b4a.run/protected",{withCredentials:true});
       console.log(response.data.user)
 
       setName(response.data.user.name)
