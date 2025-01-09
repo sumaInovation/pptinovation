@@ -130,18 +130,22 @@ const Singup = () => {
     }
   };
    const isAuthenticated = async () => {
-    try {
-      const response = await axios.get("https://googlesheet-yuetcisb.b4a.run/protected");
-      console.log(response.data.user)
-
-      setName(response.data.user.name)
-      setPicture(response.data.user.picture)
-      return response.data; // Contains user info if authenticated
-    } catch (err) {
-      console.error("Authentication failed", err);
-      return null;
+    
+      axios.get("https://googlesheet-yuetcisb.b4a.run/protected", {
+        withCredentials: true, // Important: ensures cookies are included in the request
+      })
+      .then(response => {
+        console.log("Protected route response:", response.data);
+        setName(response.data.user.name)
+        setPicture(response.data.user.picture)
+        return response.data; // Contains user info if authenticated
+      })
+      .catch(error => {
+        console.error("Authentication failed:", error);
+      });
     }
-  };
+  
+  
   return (
     <div className='mt-[80px] text-white'>
       <button onClick={()=>{window.open(
