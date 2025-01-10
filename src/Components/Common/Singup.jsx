@@ -111,70 +111,43 @@
 
 
 
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
-const App = () => {
-  const [user, setUser] = useState(null);
-  const [message, setMessage] = useState('');
+function App() {
+    const [csrfToken, setCsrfToken] = useState('');
 
-  // Login function
-  const login = async () => {
-    try {
-      const response = await axios.post('https://googlesheet-yuetcisb.b4a.run/login', {}, {
-        withCredentials: true,  // Include credentials (cookies)
-      });
-      setMessage(response.data.message);
-      //fetchUser();
-    } catch (error) {
-      setMessage('Login failed: ' + error.message);
-    }
-  };
+    useEffect(() => {
+        fetch('https://googlesheet-yuetcisb.b4a.run/api/csrf-token', {
+            credentials: 'include', // Include cookies with the request
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setCsrfToken(data.csrfToken);
+            })
+            .catch((err) => console.error('Error fetching CSRF token:', err));
+    }, []);
 
-  // Fetch the user (session)
-  const fetchUser = async () => {
-    try {
-      const response = await axios.get('https://googlesheet-yuetcisb.b4a.run/user', {
-        withCredentials: true,  // Include credentials (cookies)
-      });
-      setUser(response.data);
-    } catch (error) {
-      setUser(null);
-      setMessage('Not authenticated');
-    }
-  };
+    const handleSubmit = () => {
+        fetch('http://localhost:5000/api/some-protected-route', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'CSRF-Token': csrfToken, // Add CSRF token to request headers
+            },
+            credentials: 'include', // Include cookies with the request
+            body: JSON.stringify({ key: 'value' }),
+        })
+            .then((res) => res.json())
+            .then((data) => console.log(data))
+            .catch((err) => console.error(err));
+    };
 
-  // Logout function
-  const logout = async () => {
-    try {
-      const response = await axios.post('https://googlesheet-yuetcisb.b4a.run/logout', {}, {
-        withCredentials: true,  // Include credentials (cookies)
-      });
-      setMessage(response.data.message);
-      setUser(null);
-    } catch (error) {
-      setMessage('Logout failed: ' + error.message);
-    }
-  };
-
-  useEffect(() => {
-    fetchUser();  // Check if user is already logged in when component mounts
-  }, []);
-
-  return (
-    <div className='mt-[80px] text-white'>
-      <h1>Session Management Example</h1>
-      <p>{message}</p>
-      {user ? (
-        <div>
-          <h2>Welcome, {user.name}</h2>
-          <button onClick={logout}>Logout</button>
+    return (
+        <div className='mt-[80px] text-white'>
+            <h1>React App</h1>
+            <button onClick={handleSubmit}>Send Protected Request</button>
         </div>
-      ) : (
-        <button onClick={login}>Login</button>
-      )}
-    </div>
-  );
-};
+    );
+}
 
 export default App;
