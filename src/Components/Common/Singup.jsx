@@ -125,7 +125,7 @@ const App = () => {
         withCredentials: true,  // Include credentials (cookies)
       });
       setMessage(response.data.message);
-      fetchUser();
+      //fetchUser();
     } catch (error) {
       setMessage('Login failed: ' + error.message);
     }
