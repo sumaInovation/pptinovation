@@ -111,72 +111,70 @@
 
 
 
-import React, { useEffect, useState } from 'react'
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-const Singup = () => {
-  axios.defaults.withCredentials = true;
-  const[name,setName]=useState(null);
-  const[picture,setPicture]=useState(null);
-  const handleLogout = async () => {
-    try {
-      // Call the logout endpoint on the backend
-      await axios.get('https://googlesheet-yuetcisb.b4a.run/logout', { withCredentials: true });
-      
-      // After successful logout, redirect or update UI
-     // window.location.href = '/'; // Redirect to home or login page
-    } catch (error) {
-      console.error("Error logging out:", error);
-    }
-  };
-   const isAuthenticated = async () => {
-    try {
-      const response = await axios.get("https://googlesheet-yuetcisb.b4a.run/protected",{withCredentials:true});
-      console.log(response.data.user)
 
-      setName(response.data.user.name)
-      setPicture(response.data.user.picture)
-      return response.data; // Contains user info if authenticated
-    } catch (err) {
-      console.error("Authentication failed", err);
-      return null;
-    }
-  };
-  
-  const getcokies=async()=>{
+const App = () => {
+  const [user, setUser] = useState(null);
+  const [message, setMessage] = useState('');
+
+  // Login function
+  const login = async () => {
     try {
-      const response = await axios.get("https://googlesheet-yuetcisb.b4a.run", {
-        withCredentials: true, // To include cookies in the request
+      const response = await axios.post('https://googlesheet-yuetcisb.b4a.run/login', {}, {
+        withCredentials: true,  // Include credentials (cookies)
       });
-      console.log("Response data:", response.data);
+      setMessage(response.data.message);
+      fetchUser();
     } catch (error) {
-      console.error("Error fetching data:", error.response || error.message);
+      setMessage('Login failed: ' + error.message);
     }
-  }
+  };
 
-  const readcookies=()=>{
-    
-      const cookies = document.cookie
-     console.log(cookies)
-    
+  // Fetch the user (session)
+  const fetchUser = async () => {
+    try {
+      const response = await axios.get('https://googlesheet-yuetcisb.b4a.run/user', {
+        withCredentials: true,  // Include credentials (cookies)
+      });
+      setUser(response.data);
+    } catch (error) {
+      setUser(null);
+      setMessage('Not authenticated');
+    }
+  };
 
-  }
- 
+  // Logout function
+  const logout = async () => {
+    try {
+      const response = await axios.post('https://googlesheet-yuetcisb.b4a.run/logout', {}, {
+        withCredentials: true,  // Include credentials (cookies)
+      });
+      setMessage(response.data.message);
+      setUser(null);
+    } catch (error) {
+      setMessage('Logout failed: ' + error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();  // Check if user is already logged in when component mounts
+  }, []);
+
   return (
     <div className='mt-[80px] text-white'>
-      <button onClick={getcokies}>press</button>
-    <br/>
-    <button onClick={readcookies
-    }>Logout</button>
-
-     {name && <div> <h1 className='text-4xl'>
-      Wellcome {name}
-
-     </h1>
-     <img src={picture} className='w-16 h-16'/>
-     </div>}
+      <h1>Session Management Example</h1>
+      <p>{message}</p>
+      {user ? (
+        <div>
+          <h2>Welcome, {user.name}</h2>
+          <button onClick={logout}>Logout</button>
+        </div>
+      ) : (
+        <button onClick={login}>Login</button>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Singup
+export default App;
