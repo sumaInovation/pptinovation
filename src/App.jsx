@@ -10,9 +10,13 @@ import Reports from './Pages/Reports'
 import SignUpForm from './Components/Common/Singup'
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-     
+import AuthProvider from './Createcontex'; // Import the AuthProvider
+  
      const App = () => {
        return (
+        <AuthProvider>
+
+       
         <BrowserRouter>
         <Navbar/>
         <Routes>
@@ -22,7 +26,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
          <Route path='/singup' element={<SignUpForm />}/>
         </Routes>
         </BrowserRouter>
-        
+        </AuthProvider>
        )
      }
      

@@ -126,7 +126,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className='mt-[80px] text-white'>
+    <div className='mt-[100px] text-white'>
     <nav>
       {user ? (
         <>
