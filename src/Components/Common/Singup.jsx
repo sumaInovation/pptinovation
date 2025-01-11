@@ -9,14 +9,7 @@ const LoginForm = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [sessionUsername, setSessionUsername] = useState(""); // To store session username
 
-  // Load username from localStorage if the user is logged in
-  useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
-    if (storedUsername) {
-      setUsername(storedUsername);
-      setIsLoggedIn(true);
-    }
-  }, []);
+ 
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -27,7 +20,7 @@ const LoginForm = () => {
     }
 
     setError("");
-    setLoading(true);
+    
 
     try {
       // Send POST request to your backend for login
@@ -46,7 +39,7 @@ const LoginForm = () => {
     } catch (err) {
       setError("Invalid username or password");
     } finally {
-      setLoading(false);
+    
     }
   };
 
