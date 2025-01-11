@@ -111,46 +111,47 @@
 
 
 
-import React, { useEffect, useState } from 'react';
 
-function App() {
-    const [csrfToken, setCsrfToken] = useState('');
+import React, { useContext,useState } from 'react';
+import { AuthContext } from '../../Createcontex';
 
-    useEffect(() => {
-        fetch('https://googlesheet-yuetcisb.b4a.run/api/csrf-token', {
-            credentials: 'include', // Include cookies with the request
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                setCsrfToken(data.csrfToken);
-            })
-            .catch((err) => console.error('Error fetching CSRF token:', err));
-    }, []);
+const Navbar = () => {
+  const { user, logout,login } = useContext(AuthContext);
+  const [username, setUsername] = useState('');
+  
 
-    const handleSubmit = () => {
-        const fetchData = async () => {
-            try {
-              const response = await fetch("https://googlesheet-yuetcisb.b4a.run/get");
-              if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-              }
-              const result = await response.json();
-              console.log(result)
-            } catch (err) {
-                console.log(err)
-            } finally {
-                console.log('false')
-            }
-          }; 
-           
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login(username);
+  };
 
-    return (
-        <div className='mt-[80px] text-white'>
-            <h1>React App</h1>
-            <button onClick={handleSubmit}>Send Protected Request</button>
-        </div>
-    );
-}
+  return (
+    <div className='mt-[80px] text-white'>
+    <nav>
+      {user ? (
+        <>
+          <span>Welcome, {user}!</span>
+          <button onClick={logout}>Logout</button>
+        </>
+      ) : (
+        <span>Please log in.</span>
+      )}
+    </nav>
 
-export default App;
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Enter your username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <button type="submit">Login</button>
+    </form>
+
+
+
+    </div>
+  );
+};
+
+export default Navbar;
