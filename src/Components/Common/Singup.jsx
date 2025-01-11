@@ -112,12 +112,13 @@
 
 
 
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
 
 const Singup = () => {
+    const[name,setName]=useState("unkwon")
     // Set default configuration for axios
 const api = axios.create({
     baseURL: 'https://googlesheet-yuetcisb.b4a.run', // Replace with your backend URL
@@ -138,6 +139,7 @@ const api = axios.create({
     try {
       const response = await api.get('/session');
       console.log('User session:', response.data.username);
+      setName(response.data.username)
       return response.data.username;
     } catch (error) {
       console.error('No active session:');
@@ -164,6 +166,7 @@ const api = axios.create({
         const username = Cookies.get('username');
         console.log(username);
       }}>GETUSER</button></div>
+      <div>{name}</div>
     </div>
   )
 }
