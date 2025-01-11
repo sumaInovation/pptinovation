@@ -42,10 +42,7 @@ const LoginForm = () => {
         }
       );
 
-      if (response.status === 200) {
-        localStorage.setItem("username", username); // Store username in localStorage
-        setIsLoggedIn(true);
-      }
+     
     } catch (err) {
       setError("Invalid username or password");
     } finally {
@@ -71,6 +68,8 @@ const LoginForm = () => {
 
       if (response.data.username) {
         setSessionUsername(response.data.username); // Set the session username
+        localStorage.setItem("username",response.data.username);
+        setIsLoggedIn(true);
       }
     } catch (err) {
       setSessionUsername("No active session or error fetching session");
