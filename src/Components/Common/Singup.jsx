@@ -113,45 +113,53 @@
 
 
 import React, { useContext,useState } from 'react';
-import { AuthContext } from '../../Createcontex';
+import axios from 'axios';
 
-const Navbar = () => {
-  const { user, logout,login } = useContext(AuthContext);
-  const [username, setUsername] = useState('');
+const Singup = () => {
+    // Set default configuration for axios
+const api = axios.create({
+    baseURL: 'https://googlesheet-yuetcisb.b4a.run', // Replace with your backend URL
+    withCredentials: true, // Allow cookies to be sent with requests
+  });
   
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    login(username);
+   const login = async (username) => {
+    try {
+      const response = await api.post('/login', { username });
+      console.log(response.data.message); // Login successful
+    } catch (error) {
+      console.error('Login failed:');
+    }
+  };
+  
+   const getSession = async () => {
+    try {
+      const response = await api.get('/session');
+      console.log('User session:', response.data.username);
+      return response.data.username;
+    } catch (error) {
+      console.error('No active session:');
+      return null;
+    }
+  };
+  
+   const logout = async () => {
+    try {
+      const response = await api.post('/logout');
+      console.log(response.data.message); // Logout successful
+    } catch (error) {
+      console.error('Logout failed:');
+    }
   };
 
+
   return (
-    <div className='mt-[100px] text-white'>
-    <nav>
-      {user ? (
-        <>
-          <span>Welcome, {user}!</span>
-          <button onClick={logout}>Logout</button>
-        </>
-      ) : (
-        <span>Please log in.</span>
-      )}
-    </nav>
-
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Enter your username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <button type="submit">Login</button>
-    </form>
-
-
-
+    <div className='mt-[80px] text-white'>
+      
+      <div><button onClick={login("sumanga")}>LOGIN</button></div>
+      <div><button onClick={ getSession}>GETUSER</button></div>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Singup
+
