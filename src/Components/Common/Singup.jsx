@@ -42,7 +42,10 @@ const LoginForm = () => {
         }
       );
 
-     
+      if (response.status === 200) {
+        localStorage.setItem("username", username); // Store username in localStorage
+        setIsLoggedIn(true);
+      }
     } catch (err) {
       setError("Invalid username or password");
     } finally {
@@ -55,7 +58,7 @@ const LoginForm = () => {
     localStorage.removeItem("username");
     setIsLoggedIn(false);
 
-    // Optionally send a logout request to the server to clear the session cookie
+    // Optionally send a logout request to the server to clear the session
     axios.post("https://googlesheet-yuetcisb.b4a.run/logout", {}, { withCredentials: true });
   };
 
@@ -68,7 +71,7 @@ const LoginForm = () => {
 
       if (response.data.username) {
         setSessionUsername(response.data.username); // Set the session username
-        localStorage.setItem("username",response.data.username);
+        localStorage.setItem("username", response.data.username);
         setIsLoggedIn(true);
       }
     } catch (err) {
