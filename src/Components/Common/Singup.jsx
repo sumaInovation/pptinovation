@@ -112,8 +112,10 @@
 
 
 
-import React, { useContext,useState } from 'react';
+import React from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
+
 
 const Singup = () => {
     // Set default configuration for axios
@@ -157,7 +159,11 @@ const api = axios.create({
     <div className='mt-[80px] text-white'>
       
       <div><button onClick={login}>LOGIN</button></div>
-      <div><button onClick={ getSession}>GETUSER</button></div>
+      <div><button onClick={ getSession}>GETSESSION</button></div>
+      <div><button onClick={()=>{
+        const username = Cookies.get('username');
+        console.log(username);
+      }}>GETUSER</button></div>
     </div>
   )
 }
