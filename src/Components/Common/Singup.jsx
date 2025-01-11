@@ -7,6 +7,7 @@ const LoginForm = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [sessionUsername, setSessionUsername] = useState(""); // To store session username
 
   // Load username from localStorage if the user is logged in
   useEffect(() => {
@@ -59,6 +60,21 @@ const LoginForm = () => {
 
     // Optionally send a logout request to the server to clear the session cookie
     axios.post("https://googlesheet-yuetcisb.b4a.run/logout", {}, { withCredentials: true });
+  };
+
+  // Handle getting session info
+  const getSessionInfo = async () => {
+    try {
+      const response = await axios.get("https://googlesheet-yuetcisb.b4a.run/session", {
+        withCredentials: true, // Ensure cookies are sent with the request
+      });
+
+      if (response.data.username) {
+        setSessionUsername(response.data.username); // Set the session username
+      }
+    } catch (err) {
+      setSessionUsername("No active session or error fetching session");
+    }
   };
 
   return (
@@ -132,6 +148,21 @@ const LoginForm = () => {
               Logout
             </button>
           </div>
+        )}
+
+        {/* Button to get session info */}
+        <button
+          onClick={getSessionInfo}
+          className="w-full bg-green-500 text-white p-3 rounded-md shadow-sm hover:bg-green-600 mt-4"
+        >
+          Get Session Info
+        </button>
+
+        {/* Display session username */}
+        {sessionUsername && (
+          <h3 className="text-xl text-center mt-4 text-gray-700">
+            Session Info: {sessionUsername}
+          </h3>
         )}
       </div>
     </div>
