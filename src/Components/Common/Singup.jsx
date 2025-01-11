@@ -42,10 +42,7 @@ const LoginForm = () => {
         }
       );
 
-      if (response.status === 200) {
-        localStorage.setItem("username", username); // Store username in localStorage
-        setIsLoggedIn(true);
-      }
+      
     } catch (err) {
       setError("Invalid username or password");
     } finally {
