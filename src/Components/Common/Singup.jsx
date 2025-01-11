@@ -128,18 +128,21 @@ function App() {
     }, []);
 
     const handleSubmit = () => {
-        fetch('http://localhost:5000/api/some-protected-route', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'CSRF-Token': csrfToken, // Add CSRF token to request headers
-            },
-            credentials: 'include', // Include cookies with the request
-            body: JSON.stringify({ key: 'value' }),
-        })
-            .then((res) => res.json())
-            .then((data) => console.log(data))
-            .catch((err) => console.error(err));
+        const fetchData = async () => {
+            try {
+              const response = await fetch("https://googlesheet-yuetcisb.b4a.run/get");
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+              const result = await response.json();
+              console.log(result)
+            } catch (err) {
+                console.log(err)
+            } finally {
+                console.log('false')
+            }
+          }; 
+           
     };
 
     return (
