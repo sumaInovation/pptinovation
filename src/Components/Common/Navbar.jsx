@@ -21,7 +21,7 @@ export default function Navbar() {
     { name: 'Reports', href: '/report', current: false },
     { name: 'Inventory', href: '#', current: false },
     { name: 'Analytics', href: '/analytics', current: false },
-    { name: `${(userData==undefined)?"Sing Up":""}`, href: '/singup', current: false },
+    { name: `Sing Up`, href: '/singup', current: false },
   ]
   return (
     <Disclosure as="nav" className="bg-gray-800 fixed top-0 left-0 w-full z-50 ">

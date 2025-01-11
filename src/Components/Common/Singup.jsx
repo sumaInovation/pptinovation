@@ -1,175 +1,141 @@
-// import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-// import { GoogleLogin } from '@react-oauth/google';
-// import { useGoogleContext } from '../../Context/GoogleAuthContext';
+const LoginForm = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-// const SignupPage = () => {
-   
-//   const { handleLoginSuccess, handleLoginFailure, userData, handleLogout } = useGoogleContext();
-//   const [formData, setFormData] = useState({
-//     username: '',
-//     email: '',
-//     password: '',
-//   });
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData((prevData) => ({
-//       ...prevData,
-//       [name]: value,
-//     }));
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     console.log('User Signed Up:', formData);
-//     // Handle traditional signup here
-//   };
-
-//   return (
-//     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-//       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
-//         { !userData && <div>
-//         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Sign Up</h2>
-
-//         {/* Google Login Button */}
-//          <div className="mb-4">
-//           <GoogleLogin
-//             onSuccess={handleLoginSuccess}
-//             onError={handleLoginFailure}
-//             useOneTap
-          
-//           />
-//         </div>
-
-//         <div className="text-center mb-6">
-//           <p className="text-gray-500">or</p>
-//         </div>
-//         </div>
-// }
-//         {/* Traditional Signup Form */}
-//      {!userData &&    <form onSubmit={handleSubmit}>
-//           <div className="mb-4">
-//             <input
-//               type="text"
-//               name="username"
-//               value={formData.username}
-//               onChange={handleChange}
-//               placeholder="Username"
-//               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-//             />
-//           </div>
-//           <div className="mb-4">
-//             <input
-//               type="email"
-//               name="email"
-//               value={formData.email}
-//               onChange={handleChange}
-//               placeholder="Email"
-//               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-//             />
-//           </div>
-//           <div className="mb-6">
-//             <input
-//               type="password"
-//               name="password"
-//               value={formData.password}
-//               onChange={handleChange}
-//               placeholder="Password"
-//               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-//             />
-//           </div>
-//           <button
-//             type="submit"
-//             className="w-full py-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-//           >
-//             Sign Up
-//           </button>
-//         </form>}
-
-//         {/* Google User Information (if logged in via Google) */}
-//         {userData && (
-//           <div className="mt-6 text-center">
-//             <p className="text-gray-600">WELCOME</p>
-//             <p className="font-semibold">{userData.name}</p>
-//             <p className="font-semibold">You are{userData.name}</p>
-            
-//             <img src={userData.picture} alt="profile" className="w-16 h-16 rounded-full mx-auto mt-2" />
-//             <button
-//               onClick={handleLogout}
-//               className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
-//             >
-//               Log out
-//             </button>
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-// export default SignupPage
-
-
-
-
-import React, { useState } from 'react';
-import axios from 'axios';
-import Cookies from 'js-cookie';
-
-
-const Singup = () => {
-    const[name,setName]=useState("unkwon")
-    // Set default configuration for axios
-const api = axios.create({
-    baseURL: 'https://googlesheet-yuetcisb.b4a.run', // Replace with your backend URL
-    withCredentials: true, // Allow cookies to be sent with requests
-  });
-  
-   const login = async () => {
-    const username="sumanga"
-    try {
-      const response = await api.post('/login', { username });
-      console.log(response.data.message); // Login successful
-    } catch (error) {
-      console.error('Login failed:');
+  // Load username from localStorage if the user is logged in
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setUsername(storedUsername);
+      setIsLoggedIn(true);
     }
-  };
-  
-   const getSession = async () => {
-    try {
-      const response = await api.get('/session');
-      console.log('User session:', response.data.username);
-      setName(response.data.username)
-      return response.data.username;
-    } catch (error) {
-      console.error('No active session:');
-      return null;
+  }, []);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    if (!username || !password) {
+      setError("Both fields are required");
+      return;
     }
-  };
-  
-   const logout = async () => {
+
+    setError("");
+    setLoading(true);
+
     try {
-      const response = await api.post('/logout');
-      console.log(response.data.message); // Logout successful
-    } catch (error) {
-      console.error('Logout failed:');
+      // Send POST request to your backend for login
+      const response = await axios.post(
+        "https://googlesheet-yuetcisb.b4a.run/login", // URL of your backend
+        {
+          username,
+          password,
+        },
+        {
+          withCredentials: true, // This sends cookies with the request
+        }
+      );
+
+      if (response.status === 200) {
+        localStorage.setItem("username", username); // Store username in localStorage
+        setIsLoggedIn(true);
+      }
+    } catch (err) {
+      setError("Invalid username or password");
+    } finally {
+      setLoading(false);
     }
   };
 
+  const handleLogout = () => {
+    // Remove username from localStorage and clear session (cookie)
+    localStorage.removeItem("username");
+    setIsLoggedIn(false);
+
+    // Optionally send a logout request to the server to clear the session cookie
+    axios.post("https://googlesheet-yuetcisb.b4a.run/logout", {}, { withCredentials: true });
+  };
 
   return (
-    <div className='mt-[80px] text-white'>
-      
-      <div><button onClick={login}>LOGIN</button></div>
-      <div><button onClick={ getSession}>GETSESSION</button></div>
-      <div><button onClick={()=>{
-        const username = Cookies.get('username');
-        console.log(username);
-      }}>GETUSER</button></div>
-      <div>{name}</div>
+    <div className="min-h-screen flex justify-center items-center bg-gray-100 mt-[80px]">
+      <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">
+          {isLoggedIn ? `Welcome, ${username}` : "Login"}
+        </h2>
+
+        {!isLoggedIn ? (
+          <form onSubmit={handleLogin}>
+            <div className="mb-4">
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your username"
+                required
+              />
+            </div>
+
+            <div className="mb-6">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+
+            {error && (
+              <div className="text-red-500 text-sm mb-4">
+                <p>{error}</p>
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white p-3 rounded-md shadow-sm hover:bg-blue-600 disabled:bg-gray-400"
+              disabled={loading}
+            >
+              {loading ? "Logging in..." : "Login"}
+            </button>
+          </form>
+        ) : (
+          <div>
+            <p className="text-gray-700 mb-4">You are logged in as {username}</p>
+            <button
+              onClick={handleLogout}
+              className="w-full bg-red-500 text-white p-3 rounded-md shadow-sm hover:bg-red-600"
+            >
+              Logout
+            </button>
+          </div>
+        )}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Singup
-
+export default LoginForm;
