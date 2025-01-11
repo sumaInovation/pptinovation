@@ -122,7 +122,8 @@ const api = axios.create({
     withCredentials: true, // Allow cookies to be sent with requests
   });
   
-   const login = async (username) => {
+   const login = async () => {
+    const username="sumanga"
     try {
       const response = await api.post('/login', { username });
       console.log(response.data.message); // Login successful
@@ -155,7 +156,7 @@ const api = axios.create({
   return (
     <div className='mt-[80px] text-white'>
       
-      <div><button onClick={login("sumanga")}>LOGIN</button></div>
+      <div><button onClick={login}>LOGIN</button></div>
       <div><button onClick={ getSession}>GETUSER</button></div>
     </div>
   )
