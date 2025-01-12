@@ -8,13 +8,12 @@ import Analytics from './Pages/Analytics'
 // import Productpage from './Pages/Productpage'
 import Reports from './Pages/Reports'
 import SignUpForm from './Components/Common/Singup'
+import Login from './Components/Common/Login';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import AuthProvider from './Createcontex'; // Import the AuthProvider
-  
      const App = () => {
        return (
-        <AuthProvider>
+    
 
        
         <BrowserRouter>
@@ -24,9 +23,10 @@ import AuthProvider from './Createcontex'; // Import the AuthProvider
          <Route path='/report' element={<Reports/>}/>
          <Route path='/analytics' element={<Analytics/>}/>
          <Route path='/singup' element={<SignUpForm />}/>
+         <Route path='/login' element={<Login />}/>
         </Routes>
         </BrowserRouter>
-        </AuthProvider>
+       
        )
      }
      

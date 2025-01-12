@@ -1,7 +1,8 @@
 
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 
 
@@ -11,17 +12,41 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  const [userData, setUserData]=useState({
-    name:"suma",
-    email:"suma",
-    picture:"#"
-  })
+  const [user, setUser] = useState();
+  
+
+
+  useEffect(() => {
+    // Define the fetch function
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/user",{ withCredentials: true });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log(result)
+        setUser(result); // Set the data
+      } catch (err) {
+       
+      } finally {
+   
+      }
+    };
+
+    fetchData();
+  }, []); 
+
+
   const navigation = [
     { name: 'Overviwe', href: '/', current: true },
     { name: 'Reports', href: '/report', current: false },
     { name: 'Inventory', href: '#', current: false },
     { name: 'Analytics', href: '/analytics', current: false },
     { name: `Sing Up`, href: '/singup', current: false },
+    { name: `Sing In`, href: '/login', current: false },
   ]
   return (
     <Disclosure as="nav" className="bg-gray-800 fixed top-0 left-0 w-full z-50 ">
@@ -38,7 +63,7 @@ export default function Navbar() {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex shrink-0 items-center text-white lg:text-3xl text-2xl ">
-             PPT Inovation
+              PPT Inovation
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
@@ -69,14 +94,14 @@ export default function Navbar() {
             </button>
 
             {/* Profile dropdown */}
-            <Menu as="div"  className={`${userData==undefined?"hidden":""} relative ml-3`}>
+            <Menu as="div" className={`${!user? "hidden" : ""} relative ml-3`}>
               <div >
                 <MenuButton className=" relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
                   {
-                    userData==undefined?"":
-                    <img src={userData.picture} alt="Profile" className="w-10 h-10 rounded-full" />
+                    !user? "" :
+                      <img src={user.picture} alt="Profile" className="w-10 h-10 rounded-full" />
                   }
                 </MenuButton>
               </div>
@@ -104,7 +129,7 @@ export default function Navbar() {
                   <a
                     href="#"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-                   onClick={""}>
+                    onClick={""}>
                     Sign out
                   </a>
                 </MenuItem>
